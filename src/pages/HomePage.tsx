@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import CountUp from 'react-countup';
+import { Helmet } from 'react-helmet-async';
 import { 
   ArrowRight, Shield, Truck, Users, Star, Stethoscope, Activity, Microscope,
   Heart, Award, CheckCircle, Globe, Quote, Zap
@@ -32,29 +33,29 @@ const staggerContainer = (staggerChildren = 0.2, delayChildren = 0): Variants =>
 // Data for the page sections
 const solutions = [
     { name: 'Diagnostic Devices', icon: Stethoscope, description: 'Superior tools for accurate diagnosis.', products: [
-        { name: 'Stethoscope', image: 'https://th.bing.com/th/id/OSK.HEROcTwEymS_OlN67Nr6CRVLbJWwKCaYxCGqT2BLeVms3ls?o=7rm=3&rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3' },
-        { name: 'Oximeter', image: 'https://i5.walmartimages.com/asr/3260dc22-17ff-4c92-ae3e-fc2b1cd5f534.ee04ba6022bb0937d7b37dea3d7aa2c9.jpeg' },
-        { name: 'BP Monitor', image: 'https://i5.walmartimages.com/asr/c1dbdcfc-1af4-42a7-9b3b-7c4dd2ee0b94.aa9043b2f0eac498724d0fc5e8bf7775.jpeg' },
-        { name: 'Thermometer', image: 'https://images.pexels.com/photos/3845981/pexels-photo-3845981.jpeg?auto=compress&cs=tinysrgb&w=800' },
+        { name: 'Stethoscope', image: 'https://th.bing.com/th/id/OSK.HEROcTwEymS_OlN67Nr6CRVLbJWwKCaYxCGqT2BLeVms3ls?o=7rm=3&rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3', alt: 'High-quality stethoscope for medical diagnosis' },
+        { name: 'Oximeter', image: 'https://i5.walmartimages.com/asr/3260dc22-17ff-4c92-ae3e-fc2b1cd5f534.ee04ba6022bb0937d7b37dea3d7aa2c9.jpeg', alt: 'Pulse oximeter displaying oxygen saturation and pulse rate' },
+        { name: 'BP Monitor', image: 'https://i5.walmartimages.com/asr/c1dbdcfc-1af4-42a7-9b3b-7c4dd2ee0b94.aa9043b2f0eac498724d0fc5e8bf7775.jpeg', alt: 'Digital blood pressure monitor with cuff' },
+        { name: 'Thermometer', image: 'https://images.pexels.com/photos/3845981/pexels-photo-3845981.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Infrared thermometer for non-contact temperature measurement' },
     ]},
     { name: 'Laboratory Equipment', icon: Microscope, description: 'Precision instruments for analysis.', products: [
-        { name: 'Microscope', image: 'https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=800' },
-        { name: 'Centrifuge', image: 'https://www.akadeum.com/wp-content/uploads/2023/07/centrifugation-1024x683.jpg' },
-        { name: 'Analyzer', image: 'https://images.pexels.com/photos/3825586/pexels-photo-3825586.jpeg?auto=compress&cs=tinysrgb&w=800' },
-        { name: 'Pipette', image: 'https://www.shutterstock.com/image-photo/medical-development-laboratory-black-scientist-260nw-1884612799.jpg' },
+        { name: 'Microscope', image: 'https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Advanced laboratory microscope for scientific research' },
+        { name: 'Centrifuge', image: 'https://www.akadeum.com/wp-content/uploads/2023/07/centrifugation-1024x683.jpg', alt: 'Lab centrifuge spinning tubes for sample separation' },
+        { name: 'Analyzer', image: 'https://images.pexels.com/photos/3825586/pexels-photo-3825586.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Medical analyzer machine processing samples in a lab' },
+        { name: 'Pipette', image: 'https://www.shutterstock.com/image-photo/medical-development-laboratory-black-scientist-260nw-1884612799.jpg', alt: 'Scientist using a pipette for precise liquid handling' },
     ]},
     { name: 'Surgical & ICU', icon: Activity, description: 'Critical care and surgical solutions.', products: [
-        { name: 'Ventilator', image: 'https://i.guim.co.uk/img/media/60bba82aaeedb75bb5d1d50e51f5e64283ae491a/0_325_4879_2928/master/4879.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=0efc31f82c2f34c94c9c7b54f20cb2b2' },
-        { name: 'Surgical Tools', image: 'https://images.pexels.com/photos/7089020/pexels-photo-7089020.jpeg?auto=compress&cs=tinysrgb&w=800' },
-        { name: 'ECG Machine', image: 'https://cdn11.bigcommerce.com/s-a1hrl7fudh/product_images/uploaded_images/ekg-machine-monitoring-heart-rate-in-icu.jpg' },
-        { name: 'Suction Unit', image: 'https://images.pexels.com/photos/7108110/pexels-photo-7108110.jpeg?auto=compress&cs=tinysrgb&w=800' },
+        { name: 'Ventilator', image: 'https://i.guim.co.uk/img/media/60bba82aaeedb75bb5d1d50e51f5e64283ae491a/0_325_4879_2928/master/4879.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=0efc31f82c2f34c94c9c7b54f20cb2b2', alt: 'Medical ventilator machine in an ICU' },
+        { name: 'Surgical Tools', image: 'https://images.pexels.com/photos/7089020/pexels-photo-7089020.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Set of sterile surgical instruments on a tray' },
+        { name: 'ECG Machine', image: 'https://cdn11.bigcommerce.com/s-a1hrl7fudh/product_images/uploaded_images/ekg-machine-monitoring-heart-rate-in-icu.jpg', alt: 'ECG machine monitoring a patient\'s heart rate in an ICU' },
+        { name: 'Suction Unit', image: 'https://images.pexels.com/photos/7108110/pexels-photo-7108110.jpeg?auto=compress&cs=tinysrgb&w=800', alt: 'Medical suction unit used in a clinical setting' },
     ]},
 ];
 
 const flagshipProducts = [
-    { id: 1, name: 'Advanced Diagnostic Tools', category: 'Diagnostics', image: 'https://minoritynurse.com/wp-content/uploads/2021/02/medical-tools.jpg', description: 'High-precision stethoscopes, BP monitors, and oximeters for accurate patient assessment in any clinical setting.' },
-    { id: 2, name: 'Modern Laboratory Analyzers', category: 'Laboratory', image: 'https://www.shutterstock.com/image-photo/black-man-scientist-microscope-analysis-600nw-2451041229.jpg', description: 'State-of-the-art centrifuges and analyzers for rapid and reliable sample processing and diagnostics.' },
-    { id: 3, name: 'Life-Support & ICU Systems', category: 'Monitoring', image: 'https://advinhealthcare.com/wp-content/uploads/2022/10/Intensive-Care-Unit-ICU-1.jpg', description: 'Compact and intuitive ECG machines and ventilators, providing critical data for patient care in high-stakes environments.' },
+    { id: 1, name: 'Advanced Diagnostic Tools', category: 'Diagnostics', image: 'https://minoritynurse.com/wp-content/uploads/2021/02/medical-tools.jpg', description: 'High-precision stethoscopes, BP monitors, and oximeters for accurate patient assessment in any clinical setting.', alt: 'A collection of advanced diagnostic tools including a stethoscope and BP monitor.' },
+    { id: 2, name: 'Modern Laboratory Analyzers', category: 'Laboratory', image: 'https://www.shutterstock.com/image-photo/black-man-scientist-microscope-analysis-600nw-2451041229.jpg', description: 'State-of-the-art centrifuges and analyzers for rapid and reliable sample processing and diagnostics.', alt: 'A scientist in a lab using a modern laboratory analyzer.' },
+    { id: 3, name: 'Life-Support & ICU Systems', category: 'Monitoring', image: 'https://advinhealthcare.com/wp-content/uploads/2022/10/Intensive-Care-Unit-ICU-1.jpg', description: 'Compact and intuitive ECG machines and ventilators, providing critical data for patient care in high-stakes environments.', alt: 'An intensive care unit with life-support systems and patient monitoring equipment.' },
 ];
 
 const partnershipProof = [
@@ -65,7 +66,7 @@ const partnershipProof = [
 
 const stats = [
     { number: 200, suffix: '+', label: 'Healthcare Partners in TZ', icon: Users },
-    { number: 15, suffix: '+', label: 'Years of Experience', icon: Award },
+    { number: 3, suffix: '+', label: 'Years of Experience', icon: Award },
     { number: 99, suffix: '%', label: 'Client Satisfaction', icon: Star },
 ];
 
@@ -85,6 +86,11 @@ const HomePage: React.FC = () => {
 
     return (
     <div className="bg-slate-50 text-slate-800 antialiased">
+        <Helmet>
+            <title>IP Medical Care - Tanzania's Leading Medical Equipment Supplier</title>
+            <meta name="description" content="IP Medical Care is the premier supplier of high-quality, certified medical equipment and supplies in Tanzania. We equip hospitals, clinics, and laboratories with precision tools and reliable support for superior healthcare." />
+            <link rel="canonical" href="https://ipmedicare.co.tz" />
+        </Helmet>
         {/* Hero Section */}
         <section className="relative min-h-screen flex items-center bg-gradient-to-br from-blue-50 via-teal-50 to-emerald-50 text-slate-800 overflow-hidden">
             <div className="absolute inset-0 z-0 opacity-50" style={{ backgroundImage: 'radial-gradient(#e2e8f0 1px, transparent 1px)', backgroundSize: '1.5rem 1.5rem' }}></div>
@@ -100,9 +106,9 @@ const HomePage: React.FC = () => {
                         </motion.div>
                     </div>
                     <div className="relative h-96 lg:h-[600px] hidden lg:block">
-                        <motion.img style={{ y: y1 }} src="https://th.bing.com/th/id/OSK.HEROcTwEymS_OlN67Nr6CRVLbJWwKCaYxCGqT2BLeVms3ls?o=7rm=3&rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3" alt="Stethoscope" className="absolute top-10 left-0 w-2/5 rounded-2xl shadow-2xl" />
-                        <motion.img style={{ y: y2 }} src="https://penntoday.upenn.edu/sites/default/files/2021-10/stroke-disparity-main.jpg" alt="ECG Monitor" className="absolute top-1/4 right-0 w-3/4 rounded-2xl shadow-2xl" />
-                        <motion.img style={{ y: y3 }} src="https://www.shutterstock.com/image-photo/regular-prenatal-checkup-maternity-center-600nw-2315571749.jpg" alt="Medical Scale" className="absolute bottom-10 left-1/4 w-1/2 rounded-2xl shadow-2xl" />
+                        <motion.img style={{ y: y1 }} src="https://th.bing.com/th/id/OSK.HEROcTwEymS_OlN67Nr6CRVLbJWwKCaYxCGqT2BLeVms3ls?o=7rm=3&rs=1&pid=ImgDetMain&cb=idpwebp2&o=7&rm=3" alt="Close-up of a modern stethoscope" className="absolute top-10 left-0 w-2/5 rounded-2xl shadow-2xl" />
+                        <motion.img style={{ y: y2 }} src="https://penntoday.upenn.edu/sites/default/files/2021-10/stroke-disparity-main.jpg" alt="Doctor examining a patient's brain scan on a monitor" className="absolute top-1/4 right-0 w-3/4 rounded-2xl shadow-2xl" />
+                        <motion.img style={{ y: y3 }} src="https://www.shutterstock.com/image-photo/regular-prenatal-checkup-maternity-center-600nw-2315571749.jpg" alt="Pregnant woman being examined by a doctor in a clinic" className="absolute bottom-10 left-1/4 w-1/2 rounded-2xl shadow-2xl" />
                     </div>
                 </div>
             </motion.div>
@@ -142,7 +148,7 @@ const HomePage: React.FC = () => {
                             <motion.div key={hoveredSolution.name} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="h-full flex flex-col">
                                 <div className="grid grid-cols-2 gap-4 flex-grow">
                                     {hoveredSolution.products.map((p, i) => (
-                                        <div key={i} className="bg-slate-100 rounded-lg overflow-hidden group/thumb"><img src={p.image} alt={p.name} className="w-full h-24 md:h-32 object-cover group-hover/thumb:scale-105 transition-transform" /><p className="p-2 text-xs text-center font-medium text-slate-600">{p.name}</p></div>
+                                        <div key={i} className="bg-slate-100 rounded-lg overflow-hidden group/thumb"><img src={p.image} alt={p.alt} className="w-full h-24 md:h-32 object-cover group-hover/thumb:scale-105 transition-transform" /><p className="p-2 text-xs text-center font-medium text-slate-600">{p.name}</p></div>
                                     ))}
                                 </div>
                                 <Link to="/products" className="mt-4 block text-center w-full bg-slate-800 hover:bg-slate-900 text-white py-3 px-6 rounded-lg font-semibold transition-all duration-300">View All {hoveredSolution.name}</Link>
@@ -170,14 +176,14 @@ const HomePage: React.FC = () => {
                 <div className="grid lg:grid-cols-3 gap-8 items-center">
                     <div className="lg:col-span-2 relative h-[500px] w-full bg-slate-100 rounded-2xl shadow-lg border border-slate-200/80 p-4">
                         <AnimatePresence mode="wait">
-                            <motion.img key={activeProduct.id} src={activeProduct.image} alt={activeProduct.name} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} transition={{ duration: 0.4, ease: 'easeInOut' }} className="w-full h-full object-cover rounded-xl"/>
+                            <motion.img key={activeProduct.id} src={activeProduct.image} alt={activeProduct.alt} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }} transition={{ duration: 0.4, ease: 'easeInOut' }} className="w-full h-full object-cover rounded-xl"/>
                         </AnimatePresence>
                     </div>
                     <div className="flex flex-col gap-4">
                         {flagshipProducts.map(p => (
                             <motion.div key={p.id} initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.5 }} variants={fadeIn('left')} onClick={() => setActiveProduct(p)}
                                 className={`p-4 rounded-xl border-2 transition-all duration-300 cursor-pointer flex items-center gap-4 ${activeProduct.id === p.id ? 'bg-white border-blue-500 shadow-md' : 'bg-white border-transparent hover:border-slate-300'}`}>
-                                <img src={p.image} alt={p.name} className="w-16 h-16 object-cover rounded-lg flex-shrink-0"/>
+                                <img src={p.image} alt={p.alt} className="w-16 h-16 object-cover rounded-lg flex-shrink-0"/>
                                 <div><h4 className="font-bold text-slate-800">{p.name}</h4><p className="text-xs text-slate-500">{p.category}</p></div>
                             </motion.div>
                         ))}
@@ -220,7 +226,7 @@ const HomePage: React.FC = () => {
                             </motion.div>
                         ))}
                     </div>
-                    <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeIn('left')} className="hidden lg:block relative bg-cover bg-center rounded-2xl shadow-xl" style={{ backgroundImage: "url('https://www.shutterstock.com/image-photo/healthcare-black-man-doctor-clipboard-600nw-2284538255.jpg')" }}></motion.div>
+                    <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeIn('left')} className="hidden lg:block relative bg-cover bg-center rounded-2xl shadow-xl" style={{ backgroundImage: "url('https://www.shutterstock.com/image-photo/healthcare-black-man-doctor-clipboard-600nw-2284538255.jpg')" }} aria-label="Male doctor in Tanzania reviewing a clipboard"></motion.div>
                 </div>
             </div>
         </section>

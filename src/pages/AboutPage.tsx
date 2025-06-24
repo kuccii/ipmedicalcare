@@ -1,9 +1,10 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { Award, Users, Globe, Shield, Clock, Target, CheckCircle, Heart, Building } from 'lucide-react';
 
 // Re-using the animation variants from HomePage for consistency
-const fadeIn = (direction = 'up', type = 'tween', delay = 0, duration = 0.6) => ({
+const fadeIn = (direction = 'up', type: 'tween' | 'spring' = 'tween', delay = 0, duration = 0.6): Variants => ({
   hidden: {
     x: direction === 'left' ? 100 : direction === 'right' ? -100 : 0,
     y: direction === 'up' ? 100 : direction === 'down' ? -100 : 0,
@@ -17,7 +18,7 @@ const fadeIn = (direction = 'up', type = 'tween', delay = 0, duration = 0.6) => 
   },
 });
 
-const staggerContainer = (staggerChildren = 0.2, delayChildren = 0) => ({
+const staggerContainer = (staggerChildren = 0.2, delayChildren = 0): Variants => ({
   hidden: {},
   show: {
     transition: { staggerChildren, delayChildren },
@@ -26,7 +27,7 @@ const staggerContainer = (staggerChildren = 0.2, delayChildren = 0) => ({
 
 const AboutPage: React.FC = () => {
   const stats = [
-    { number: 15, suffix: '+', label: 'Years of Expertise', icon: Award },
+    { number: 3, suffix: '+', label: 'Years of Expertise', icon: Award },
     { number: 200, suffix: '+', label: 'Healthcare Partners', icon: Building },
     { number: 50, suffix: '+', label: 'Countries Served', icon: Globe },
     { number: 5000, suffix: '+', label: 'Equipment Delivered', icon: CheckCircle },
@@ -40,13 +41,13 @@ const AboutPage: React.FC = () => {
   ];
 
   const leadership = [
-    { name: 'Dr. Amina Hassan', role: 'Chief Executive Officer', image: 'https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: '15+ years in medical device industry' },
-    { name: 'Dr. John Mwalimu', role: 'Chief Operations Officer', image: 'https://images.pexels.com/photos/5327650/pexels-photo-5327650.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: 'Global logistics and supply chain expert' },
-    { name: 'Dr. Sarah Johnson', role: 'Chief Technology Officer', image: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: 'Expert in medical device quality assurance' },
+    { name: 'Dr. Amina Hassan', role: 'Chief Executive Officer', image: 'https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: '15+ years in medical device industry', alt: 'Headshot of Dr. Amina Hassan, CEO of IP Medical Care' },
+    { name: 'Dr. John Mwalimu', role: 'Chief Operations Officer', image: 'https://images.pexels.com/photos/5327650/pexels-photo-5327650.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: 'Global logistics and supply chain expert', alt: 'Headshot of Dr. John Mwalimu, COO of IP Medical Care' },
+    { name: 'Dr. Sarah Johnson', role: 'Chief Technology Officer', image: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: 'Expert in medical device quality assurance', alt: 'Headshot of Dr. Sarah Johnson, CTO of IP Medical Care' },
   ];
   
   // A component for animated number counters
-  const AnimatedCounter = ({ value, suffix = '' }) => {
+  const AnimatedCounter: React.FC<{ value: number; suffix?: string }> = ({ value, suffix = '' }) => {
     // A simple placeholder. In a real app, you'd use a spring-based animation.
     return (
       <span className="font-bold text-4xl lg:text-5xl bg-gradient-to-r from-blue-600 via-teal-600 to-emerald-600 bg-clip-text text-transparent">
@@ -57,6 +58,11 @@ const AboutPage: React.FC = () => {
 
   return (
     <div className="bg-slate-50 text-slate-800 antialiased">
+      <Helmet>
+        <title>About IP Medical Care | Our Mission & Leadership in Tanzania</title>
+        <meta name="description" content="Learn about IP Medical Care's mission to elevate healthcare in Tanzania. Meet our leadership team and discover our commitment to quality, reliability, and customer-focused service in the medical supply industry." />
+        <link rel="canonical" href="https://ipmedicare.co.tz/about" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative flex items-center bg-gradient-to-br from-blue-50 via-teal-50 to-emerald-50 text-slate-800 pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-50">
@@ -81,7 +87,7 @@ const AboutPage: React.FC = () => {
             </span>
           </motion.h1>
           <motion.p variants={fadeIn('down', 'tween', 0.4)} className="mt-6 text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto">
-            Since 2009, we've been dedicated to providing healthcare professionals with the highest quality medical equipment and exceptional service across Tanzania, East Africa, and beyond.
+            Since 2022, we've been dedicated to providing healthcare professionals with the highest quality medical equipment and exceptional service across Tanzania, East Africa, and beyond.
           </motion.p>
         </motion.div>
       </section>
@@ -119,7 +125,7 @@ const AboutPage: React.FC = () => {
             <motion.div variants={fadeIn('right')} className="relative">
                 <img
                     src="https://i0.wp.com/u-volfoundation.org/wp-content/uploads/2024/07/image00052.jpg?resize=750%2C422&ssl=1"
-                    alt="Healthcare Team"
+                    alt="A diverse team of Tanzanian healthcare professionals in a collaborative meeting, representing IP Medical Care's partners."
                     className="rounded-2xl shadow-xl w-full"
                 />
                 <motion.div 
@@ -218,7 +224,7 @@ const AboutPage: React.FC = () => {
               <motion.div key={index} variants={fadeIn('up')} className="group text-center bg-white p-6 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200/80">
                 <img
                   src={leader.image}
-                  alt={leader.name}
+                  alt={leader.alt}
                   className="w-32 h-32 rounded-full mx-auto mb-4 object-cover shadow-lg border-4 border-white group-hover:scale-105 transition-transform duration-300"
                 />
                 <h3 className="font-bold text-xl text-slate-900 mb-1">{leader.name}</h3>

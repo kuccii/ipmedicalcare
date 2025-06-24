@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { Phone, Mail, MapPin, Clock, Send, MessageSquare } from 'lucide-react';
 
 // Animation variants for a consistent feel
-const fadeIn = (direction = 'up', type = 'tween', delay = 0, duration = 0.6) => ({
+const fadeIn = (direction = 'up', type: 'tween' | 'spring' = 'tween', delay = 0, duration = 0.6): Variants => ({
   hidden: {
     y: direction === 'up' ? 50 : direction === 'down' ? -50 : 0,
     opacity: 0,
@@ -15,7 +16,7 @@ const fadeIn = (direction = 'up', type = 'tween', delay = 0, duration = 0.6) => 
   },
 });
 
-const staggerContainer = (staggerChildren = 0.1, delayChildren = 0) => ({
+const staggerContainer = (staggerChildren = 0.1, delayChildren = 0): Variants => ({
   hidden: {},
   show: {
     transition: { staggerChildren, delayChildren },
@@ -55,6 +56,11 @@ const ContactPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30">
+      <Helmet>
+        <title>Contact IP Medical Care | Medical Equipment Suppliers in Tanzania</title>
+        <meta name="description" content="Contact IP Medical Care in Dar Es Salaam for all your medical equipment needs in Tanzania. Call us, email us, or visit our showroom. We provide quotes within 24 hours." />
+        <link rel="canonical" href="https://ipmedicare.co.tz/contact" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-50 via-teal-50 to-emerald-50 pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
         <motion.div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center" initial="hidden" animate="show" variants={staggerContainer(0.2)}>

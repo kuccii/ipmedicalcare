@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { 
   Calendar, User, ArrowRight, Tag, Search, Feather, BookOpen, Microscope, HeartPulse, HardHat 
 } from 'lucide-react';
@@ -21,7 +22,7 @@ const fadeIn = (direction: 'up' | 'down' | 'left' | 'right' = 'up', type: 'tween
   },
 });
 
-const staggerContainer = (staggerChildren = 0.1, delayChildren = 0) => ({
+const staggerContainer = (staggerChildren = 0.1, delayChildren = 0): Variants => ({
   hidden: {},
   show: {
     transition: { staggerChildren, delayChildren },
@@ -37,6 +38,7 @@ const blogPosts = [
         date: '2024-01-15',
         category: 'Equipment Guide',
         image: 'https://images.pexels.com/photos/3845981/pexels-photo-3845981.jpeg?auto=compress&cs=tinysrgb&w=800', // African nurse with thermometer
+        alt: 'A nurse carefully using a modern infrared thermometer to check a patient\'s temperature.',
         readTime: '5 min read',
         tags: ['Temperature Monitoring', 'Diagnostic Equipment']
     },
@@ -48,6 +50,7 @@ const blogPosts = [
         date: '2024-01-10',
         category: 'Maintenance',
         image: 'https://www.sgs.com/-/media/sgscorp/images/temporary/tablet-showing-heart-test-result.cdn.en-TZ.1.jpg', // African technician calibrating equipment
+        alt: 'A technician calibrating a complex piece of medical equipment to ensure accuracy.',
         readTime: '7 min read',
         tags: ['Maintenance', 'Quality Assurance']
     },
@@ -59,6 +62,7 @@ const blogPosts = [
         date: '2024-01-05',
         category: 'Technology',
         image: 'https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=800', // African scientist in lab
+        alt: 'A scientist looking into a microscope in a brightly lit, modern laboratory.',
         readTime: '8 min read',
         tags: ['Lab Equipment', 'Innovation']
     },
@@ -70,6 +74,7 @@ const blogPosts = [
         date: '2023-12-28',
         category: 'Procurement',
         image: 'https://softpromedical.com/wp-content/uploads/2022/09/procurement-hospital-healthcare-softpro.png', // African doctor with patient
+        alt: 'A hospital administrator discussing procurement options with a medical professional.',
         readTime: '6 min read',
         tags: ['Procurement', 'Budgeting']
     },
@@ -81,6 +86,7 @@ const blogPosts = [
         date: '2023-12-20',
         category: 'Compliance',
         image: 'https://dicentra.com/wp-content/uploads/2022/04/CE_Mark_Medical_Device_Blog_V1D1_ML-1024x576.jpg', // Stethoscope close-up
+        alt: 'A close-up view of the CE marking on a piece of medical equipment.',
         readTime: '9 min read',
         tags: ['Compliance', 'Regulation']
     },
@@ -92,6 +98,7 @@ const blogPosts = [
         date: '2023-12-15',
         category: 'Mobile Healthcare',
         image: 'https://images.pexels.com/photos/5452291/pexels-photo-5452291.jpeg?auto=compress&cs=tinysrgb&w=800', // African mobile healthcare team
+        alt: 'A team of healthcare workers standing by a mobile clinic van in a rural setting.',
         readTime: '7 min read',
         tags: ['Mobile Health', 'Rural Medicine']
     },
@@ -115,6 +122,7 @@ type BlogPost = {
   image: string;
   readTime: string;
   tags: string[];
+  alt: string;
 };
 
 const BlogCard = ({ post }: { post: BlogPost }) => (
@@ -122,7 +130,7 @@ const BlogCard = ({ post }: { post: BlogPost }) => (
       className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200/80 overflow-hidden">
       <Link to={`/blog/${post.id}`} className="block">
         <div className="relative overflow-hidden">
-          <img src={post.image} alt={post.title} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" />
+          <img src={post.image} alt={post.alt} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" />
         </div>
         <div className="p-6 flex flex-col">
           <span className="bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-xs font-semibold self-start mb-3">{post.category}</span>
@@ -152,6 +160,11 @@ const BlogPage: React.FC = () => {
 
   return (
     <div className="bg-white text-slate-800 antialiased">
+      <Helmet>
+        <title>Medical Equipment Blog & Healthcare Insights | IP Medical Care Tanzania</title>
+        <meta name="description" content="Read the IP Medical Care blog for expert insights, equipment guides, and the latest trends in healthcare technology for professionals in Tanzania." />
+        <link rel="canonical" href="https://ipmedicare.co.tz/blog" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-50 via-teal-50 to-emerald-50 pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
         <motion.div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center" initial="hidden" animate="show" variants={staggerContainer(0.2)}>

@@ -1,13 +1,14 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { 
   Calendar, MapPin, Users, TrendingUp, CheckCircle, ArrowRight, 
   BookOpen, Quote, Target, Award 
 } from 'lucide-react';
 
 // Re-using animation variants for consistency
-const fadeIn = (direction = 'up', type = 'tween', delay = 0, duration = 0.6) => ({
+const fadeIn = (direction = 'up', type: 'tween' | 'spring' = 'tween', delay = 0, duration = 0.6): Variants => ({
   hidden: {
     x: direction === 'left' ? 100 : direction === 'right' ? -100 : 0,
     y: direction === 'up' ? 50 : direction === 'down' ? -50 : 0,
@@ -21,7 +22,7 @@ const fadeIn = (direction = 'up', type = 'tween', delay = 0, duration = 0.6) => 
   },
 });
 
-const staggerContainer = (staggerChildren = 0.1, delayChildren = 0) => ({
+const staggerContainer = (staggerChildren = 0.1, delayChildren = 0): Variants => ({
   hidden: {},
   show: {
     transition: { staggerChildren, delayChildren },
@@ -38,6 +39,7 @@ const CaseStudiesPage: React.FC = () => {
       date: '2023',
       category: 'Hospital Solutions',
       image: 'https://images.pexels.com/photos/263402/pexels-photo-263402.jpeg?auto=compress&cs=tinysrgb&w=800',
+      alt: 'A fully equipped, modern ICU room at Muhimbili National Hospital.',
       challenge: 'The hospital needed to rapidly expand its ICU capacity by 50 beds to meet increased demand while maintaining the highest standards of patient care.',
       solution: 'We provided a complete, turnkey ICU setup including patient monitors, ventilators, infusion pumps, and hospital beds for all 50 new units.',
       results: [
@@ -59,6 +61,7 @@ const CaseStudiesPage: React.FC = () => {
       date: '2023',
       category: 'Laboratory Solutions',
       image: 'https://images.pexels.com/photos/3938023/pexels-photo-3938023.jpeg?auto=compress&cs=tinysrgb&w=800',
+      alt: 'A scientist working with advanced analysis equipment in the modernized KCMC laboratory.',
       challenge: 'Outdated laboratory equipment was causing significant delays in test results, affecting patient care across multiple departments.',
       solution: 'A complete laboratory modernization with automated hematology and chemistry analyzers, high-speed centrifuges, and an integrated lab information system.',
       results: [
@@ -77,6 +80,11 @@ const CaseStudiesPage: React.FC = () => {
 
   return (
     <div className="bg-slate-50 text-slate-800 antialiased">
+      <Helmet>
+        <title>Case Studies | IP Medical Care Success Stories in Tanzania</title>
+        <meta name="description" content="Discover real-world examples of how IP Medical Care has empowered healthcare providers in Tanzania with our advanced medical equipment and dedicated support. Read our success stories." />
+        <link rel="canonical" href="https://ipmedicare.co.tz/case-studies" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-50 via-teal-50 to-emerald-50 pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
         <motion.div
@@ -135,7 +143,7 @@ const CaseStudiesPage: React.FC = () => {
 
               {/* Right Column: Visuals & Results */}
               <motion.div variants={fadeIn(index % 2 === 0 ? 'left' : 'right')} className="mt-10 lg:mt-0">
-                <img src={study.image} alt={study.title} className="rounded-2xl shadow-2xl w-full h-auto object-cover"/>
+                <img src={study.image} alt={study.alt} className="rounded-2xl shadow-2xl w-full h-auto object-cover"/>
                 <div className="mt-8">
                   <h4 className="font-bold text-slate-800 text-lg mb-4">Key Results</h4>
                   <div className="grid grid-cols-2 gap-4">
@@ -159,7 +167,7 @@ const CaseStudiesPage: React.FC = () => {
               <div className="relative z-10">
                 <p className="text-slate-700 mb-6 italic text-lg leading-relaxed">"{study.testimonial.quote}"</p>
                 <div className="flex items-center gap-4">
-                  <img src="https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop&dpr=2" alt={study.testimonial.author} className="w-14 h-14 rounded-full object-cover shadow-md" />
+                  <img src="https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop&dpr=2" alt={`Headshot of ${study.testimonial.author}`} className="w-14 h-14 rounded-full object-cover shadow-md" />
                   <div>
                     <p className="font-bold text-slate-900">{study.testimonial.author}</p>
                     <p className="text-sm text-slate-600">{study.testimonial.role}</p>

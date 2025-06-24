@@ -1,13 +1,14 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { 
   Building2, FlaskConical, Heart, Users, Shield, Truck, 
   CheckCircle, Zap, Star, ArrowRight, Quote 
 } from 'lucide-react';
 
 // Re-using animation variants for consistency
-const fadeIn = (direction = 'up', type = 'tween', delay = 0, duration = 0.6) => ({
+const fadeIn = (direction = 'up', type: 'tween' | 'spring' = 'tween', delay = 0, duration = 0.6): Variants => ({
   hidden: {
     x: direction === 'left' ? 100 : direction === 'right' ? -100 : 0,
     y: direction === 'up' ? 50 : direction === 'down' ? -50 : 0,
@@ -21,7 +22,7 @@ const fadeIn = (direction = 'up', type = 'tween', delay = 0, duration = 0.6) => 
   },
 });
 
-const staggerContainer = (staggerChildren = 0.1, delayChildren = 0) => ({
+const staggerContainer = (staggerChildren = 0.1, delayChildren = 0): Variants => ({
   hidden: {},
   show: {
     transition: { staggerChildren, delayChildren },
@@ -30,12 +31,12 @@ const staggerContainer = (staggerChildren = 0.1, delayChildren = 0) => ({
 
 const IndustriesPage: React.FC = () => {
   const industries = [
-    { icon: Building2, name: 'Hospitals', description: 'Comprehensive equipment solutions for large-scale healthcare facilities.', image: 'https://medeviva.com/wp-content/custom_uploads/2023/06/1642537612-akhs-tanzania-main_entrance_3252_abdul_mohamed.jpg', services: ['ICU & Emergency Equipment', 'Surgical Instruments', 'Patient Monitoring Systems'], caseStudy: 'Equipped 50+ ICU beds at Metropolitan General Hospital with complete monitoring solutions.' },
-    { icon: Heart, name: 'Clinics & Practices', description: 'Essential, reliable medical equipment for primary care and specialty clinics.', image: 'https://www.swisstph.ch/fileadmin/_processed_/c/c/csm_Tanzania_CDCI_O.Brandenberg_388_4ae5e6761d.jpg', services: ['Examination Equipment', 'Basic Diagnostic Tools', 'Medical Scales'], caseStudy: 'Outfitted 25 primary care clinics with essential diagnostic equipment across the region.' },
-    { icon: FlaskConical, name: 'Laboratories', description: 'Precision instruments for accurate laboratory testing and analysis.', image: 'https://www.hlpc.go.tz/img/slider/benchwork.jpg', services: ['Centrifuges & Analyzers', 'Microscopes', 'Sample Processing Equipment'], caseStudy: 'Installed a complete hematology lab setup for the Regional Diagnostic Center.' },
-    { icon: Users, name: 'Government & NGOs', description: 'Reliable equipment for public health initiatives and humanitarian programs.', image: 'https://res.cloudinary.com/devex/image/fetch/c_scale,f_auto,q_auto,w_720/https://lh6.googleusercontent.com/L86U_JSCKUrMWJqJW_4oyQA9bGI1Rd6r7Vrz5ys7SBmpEBCDSw1Rc7Dw5L7LS4xNCkdNgosZS4FcCxtR6kP5W_Oc44FdGoAmQ0fswKvTQmW1963WgcnfmdgHjeWV5Eq05AlII-NC', services: ['Mobile Health Units', 'Vaccination Equipment', 'Emergency Response Gear'], caseStudy: 'Supported a national vaccination campaign with portable cold chain equipment.' },
-    { icon: Shield, name: 'Emergency Services', description: 'Critical, life-saving equipment for first responders and disaster relief.', image: 'https://images.squarespace-cdn.com/content/v1/55d6cd72e4b041b04b5e65a7/1c15beb9-2d44-45cd-8218-853e751a40b0/_ARV3180.jpg', services: ['Portable Defibrillators', 'Emergency Transport', 'Trauma Care Supplies'], caseStudy: 'Equipped emergency response teams with portable life-saving devices.' },
-    { icon: Truck, name: 'Mobile Healthcare', description: 'Compact and portable solutions for mobile medical units and remote care.', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXwkcuV2lPziAZFz2qvzaEG1pna62xgGHTyPGX-qLcdd6sSA2YvbPVV8gMwK7GZvK-OpU&usqp=CAU', services: ['Portable Diagnostics', 'Telemedicine Solutions', 'Battery-Powered Devices'], caseStudy: 'Outfitted mobile health vans serving rural communities with full diagnostic capabilities.' },
+    { icon: Building2, name: 'Hospitals', description: 'Comprehensive equipment solutions for large-scale healthcare facilities.', image: 'https://medeviva.com/wp-content/custom_uploads/2023/06/1642537612-akhs-tanzania-main_entrance_3252_abdul_mohamed.jpg', services: ['ICU & Emergency Equipment', 'Surgical Instruments', 'Patient Monitoring Systems'], caseStudy: 'Equipped 50+ ICU beds at Metropolitan General Hospital with complete monitoring solutions.', alt: 'The entrance of a modern hospital building in Tanzania.' },
+    { icon: Heart, name: 'Clinics & Practices', description: 'Essential, reliable medical equipment for primary care and specialty clinics.', image: 'https://www.swisstph.ch/fileadmin/_processed_/c/c/csm_Tanzania_CDCI_O.Brandenberg_388_4ae5e6761d.jpg', services: ['Examination Equipment', 'Basic Diagnostic Tools', 'Medical Scales'], caseStudy: 'Outfitted 25 primary care clinics with essential diagnostic equipment across the region.', alt: 'A clean and welcoming clinic waiting area in a Tanzanian community.' },
+    { icon: FlaskConical, name: 'Laboratories', description: 'Precision instruments for accurate laboratory testing and analysis.', image: 'https://www.hlpc.go.tz/img/slider/benchwork.jpg', services: ['Centrifuges & Analyzers', 'Microscopes', 'Sample Processing Equipment'], caseStudy: 'Installed a complete hematology lab setup for the Regional Diagnostic Center.', alt: 'A state-of-the-art medical laboratory with advanced testing equipment.' },
+    { icon: Users, name: 'Government & NGOs', description: 'Reliable equipment for public health initiatives and humanitarian programs.', image: 'https://res.cloudinary.com/devex/image/fetch/c_scale,f_auto,q_auto,w_720/https://lh6.googleusercontent.com/L86U_JSCKUrMWJqJW_4oyQA9bGI1Rd6r7Vrz5ys7SBmpEBCDSw1Rc7Dw5L7LS4xNCkdNgosZS4FcCxtR6kP5W_Oc44FdGoAmQ0fswKvTQmW1963WgcnfmdgHjeWV5Eq05AlII-NC', services: ['Mobile Health Units', 'Vaccination Equipment', 'Emergency Response Gear'], caseStudy: 'Supported a national vaccination campaign with portable cold chain equipment.', alt: 'Healthcare workers providing services to a community as part of a government health program.' },
+    { icon: Shield, name: 'Emergency Services', description: 'Critical, life-saving equipment for first responders and disaster relief.', image: 'https://images.squarespace-cdn.com/content/v1/55d6cd72e4b041b04b5e65a7/1c15beb9-2d44-45cd-8218-853e751a40b0/_ARV3180.jpg', services: ['Portable Defibrillators', 'Emergency Transport', 'Trauma Care Supplies'], caseStudy: 'Equipped emergency response teams with portable life-saving devices.', alt: 'An ambulance with its lights on, ready for an emergency response.' },
+    { icon: Truck, name: 'Mobile Healthcare', description: 'Compact and portable solutions for mobile medical units and remote care.', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXwkcuV2lPziAZFz2qvzaEG1pna62xgGHTyPGX-qLcdd6sSA2YvbPVV8gMwK7GZvK-OpU&usqp=CAU', services: ['Portable Diagnostics', 'Telemedicine Solutions', 'Battery-Powered Devices'], caseStudy: 'Outfitted mobile health vans serving rural communities with full diagnostic capabilities.', alt: 'A mobile healthcare van providing medical services in a rural area.' },
   ];
 
   const advantages = [
@@ -47,6 +48,11 @@ const IndustriesPage: React.FC = () => {
 
   return (
     <div className="bg-slate-50 text-slate-800 antialiased">
+      <Helmet>
+        <title>Industries We Serve | IP Medical Care | Tanzania</title>
+        <meta name="description" content="IP Medical Care provides specialized medical equipment solutions for hospitals, clinics, laboratories, government, and NGOs in Tanzania. Discover our tailored services for every healthcare sector." />
+        <link rel="canonical" href="https://ipmedicare.co.tz/industries" />
+      </Helmet>
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-50 via-teal-50 to-emerald-50 pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
         <motion.div
@@ -84,7 +90,7 @@ const IndustriesPage: React.FC = () => {
                 className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200/80 flex flex-col overflow-hidden"
               >
                 <div className="relative overflow-hidden">
-                  <img src={industry.image} alt={industry.name} className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src={industry.image} alt={industry.alt} className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
                 <div className="p-6 flex-grow flex flex-col">
                   <div className="flex items-center gap-4 mb-4">
