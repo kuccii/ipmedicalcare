@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://ipmedicare.co.tz/</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://ipmedicare.co.tz/about</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://ipmedicare.co.tz/products</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://ipmedicare.co.tz/industries</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://ipmedicare.co.tz/case-studies</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://ipmedicare.co.tz/blog</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://ipmedicare.co.tz/contact</loc>
+    <priority>0.80</priority>
+  </url>
+</urlset> 
