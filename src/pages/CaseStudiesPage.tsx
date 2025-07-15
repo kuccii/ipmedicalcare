@@ -50,8 +50,8 @@ const CaseStudiesPage: React.FC = () => {
       ],
       testimonial: {
         quote: 'IP Medical Care delivered beyond our expectations. Their rapid response and quality equipment helped us save more lives during a critical period.',
-        author: 'Dr. Amina Hassan',
-        role: 'Chief Medical Officer'
+        author: 'Ipyana Steven Ulisaja',
+        role: 'Managing Director'
       },
     },
     {
@@ -72,8 +72,8 @@ const CaseStudiesPage: React.FC = () => {
       ],
       testimonial: {
         quote: 'The new equipment has transformed our lab operations. Test turnaround times have improved dramatically, which directly benefits our patient care standards.',
-        author: 'Dr. John Mwalimu',
-        role: 'Laboratory Director'
+        author: 'Loveness Mushi',
+        role: 'General Manager'
       },
     },
   ];

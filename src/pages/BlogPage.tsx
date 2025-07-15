@@ -34,7 +34,7 @@ const blogPosts = [
         id: 1,
         title: 'How to Choose the Right Infrared Thermometer for Your Facility',
         excerpt: 'A comprehensive guide to selecting the most suitable infrared thermometer based on your specific needs, accuracy requirements, and budget considerations.',
-        author: 'Dr. Sarah Johnson',
+        author: 'Athuman Mbuga',
         date: '2024-01-15',
         category: 'Equipment Guide',
         image: 'https://images.pexels.com/photos/3845981/pexels-photo-3845981.jpeg?auto=compress&cs=tinysrgb&w=800', // African nurse with thermometer
@@ -46,7 +46,7 @@ const blogPosts = [
         id: 2,
         title: 'The Importance of Regular Medical Equipment Calibration',
         excerpt: 'Understanding why regular calibration is crucial for patient safety, regulatory compliance, and maintaining accurate diagnostics.',
-        author: 'Mark Thompson',
+        author: 'Ipyana Steven Ulisaja',
         date: '2024-01-10',
         category: 'Maintenance',
         image: 'https://www.sgs.com/-/media/sgscorp/images/temporary/tablet-showing-heart-test-result.cdn.en-TZ.1.jpg', // African technician calibrating equipment
@@ -58,7 +58,7 @@ const blogPosts = [
         id: 3,
         title: '2024 Trends in Laboratory Equipment Technology',
         excerpt: 'Explore the latest innovations in laboratory equipment, from automated analyzers to AI-powered diagnostic tools that are reshaping modern healthcare.',
-        author: 'Dr. Michael Chen',
+        author: 'Athuman Mbuga',
         date: '2024-01-05',
         category: 'Technology',
         image: 'https://images.pexels.com/photos/2280547/pexels-photo-2280547.jpeg?auto=compress&cs=tinysrgb&w=800', // African scientist in lab
@@ -70,7 +70,7 @@ const blogPosts = [
         id: 4,
         title: 'Cost-Effective Strategies for Hospital Equipment Procurement',
         excerpt: 'Practical tips for administrators to optimize equipment purchasing decisions while maintaining quality and staying within budget.',
-        author: 'Lisa Rodriguez',
+        author: 'Loveness Mushi',
         date: '2023-12-28',
         category: 'Procurement',
         image: 'https://softpromedical.com/wp-content/uploads/2022/09/procurement-hospital-healthcare-softpro.png', // African doctor with patient
@@ -82,7 +82,7 @@ const blogPosts = [
         id: 5,
         title: 'Understanding CE Marking for Medical Devices',
         excerpt: 'A comprehensive overview of CE marking requirements, helping healthcare buyers make informed purchasing decisions.',
-        author: 'Dr. Emily Watson',
+        author: 'Athuman Mbuga',
         date: '2023-12-20',
         category: 'Compliance',
         image: 'https://dicentra.com/wp-content/uploads/2022/04/CE_Mark_Medical_Device_Blog_V1D1_ML-1024x576.jpg', // Stethoscope close-up
@@ -94,7 +94,7 @@ const blogPosts = [
         id: 6,
         title: 'Mobile Healthcare: Equipment for Remote Care',
         excerpt: 'Discover the essential equipment needed for mobile healthcare units and how to optimize portable solutions for rural areas.',
-        author: 'David Park',
+        author: 'Ipyana Steven Ulisaja',
         date: '2023-12-15',
         category: 'Mobile Healthcare',
         image: 'https://images.pexels.com/photos/5452291/pexels-photo-5452291.jpeg?auto=compress&cs=tinysrgb&w=800', // African mobile healthcare team

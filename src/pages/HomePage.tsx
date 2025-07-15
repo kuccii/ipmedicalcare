@@ -59,9 +59,9 @@ const flagshipProducts = [
 ];
 
 const partnershipProof = [
-    { pillar: 'Certified Quality', icon: Shield, testimonial: 'Their equipment meets the highest international standards. We trust IP Medical Care for all our critical care needs.', author: 'Dr. Amina Hassan, Muhimbili Hospital' },
-    { pillar: 'Reliable Logistics', icon: Truck, testimonial: 'Fast, dependable delivery across Tanzania is crucial for us. IP Medical Care has never let us down.', author: 'Dr. John Mwalimu, KCMC' },
-    { pillar: 'Expert Support', icon: Award, testimonial: 'The post-installation training and 24/7 support are invaluable. They are more than suppliers; they are partners.', author: 'Sister Maria, St. Gemma Hospital' },
+    { pillar: 'Certified Quality', icon: Shield, testimonial: 'Their equipment meets the highest international standards. We trust IP Medical Care for all our critical care needs.', author: 'Ipyana Steven Ulisaja, Muhimbili Hospital' },
+    { pillar: 'Reliable Logistics', icon: Truck, testimonial: 'Fast, dependable delivery across Tanzania is crucial for us. IP Medical Care has never let us down.', author: 'Loveness Mushi, KCMC' },
+    { pillar: 'Expert Support', icon: Award, testimonial: 'The post-installation training and 24/7 support are invaluable. They are more than suppliers; they are partners.', author: 'Athuman Mbuga, St. Gemma Hospital' },
 ];
 
 const stats = [

@@ -29,7 +29,7 @@ const AboutPage: React.FC = () => {
   const stats = [
     { number: 3, suffix: '+', label: 'Years of Expertise', icon: Award },
     { number: 200, suffix: '+', label: 'Healthcare Partners', icon: Building },
-    { number: 50, suffix: '+', label: 'Countries Served', icon: Globe },
+    { number: 6, suffix: '+', label: 'Countries Served', icon: Globe },
     { number: 5000, suffix: '+', label: 'Equipment Delivered', icon: CheckCircle },
   ];
 
@@ -41,9 +41,9 @@ const AboutPage: React.FC = () => {
   ];
 
   const leadership = [
-    { name: 'Dr. Amina Hassan', role: 'Chief Executive Officer', image: 'https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: '15+ years in medical device industry', alt: 'Headshot of Dr. Amina Hassan, CEO of IP Medical Care' },
-    { name: 'Dr. John Mwalimu', role: 'Chief Operations Officer', image: 'https://images.pexels.com/photos/5327650/pexels-photo-5327650.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: 'Global logistics and supply chain expert', alt: 'Headshot of Dr. John Mwalimu, COO of IP Medical Care' },
-    { name: 'Dr. Sarah Johnson', role: 'Chief Technology Officer', image: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: 'Expert in medical device quality assurance', alt: 'Headshot of Dr. Sarah Johnson, CTO of IP Medical Care' },
+    { name: 'Ipyana Steven Ulisaja', role: 'Managing Director', image: 'https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: '5 years experience in medical device industry', alt: 'Headshot of Ipyana Steven Ulisaja, Managing Director of IP Medical Care' },
+    { name: 'Loveness Mushi', role: 'General Manager', image: 'https://images.pexels.com/photos/5327650/pexels-photo-5327650.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: 'Healthcare management and operations expert', alt: 'Headshot of Loveness Mushi, General Manager of IP Medical Care' },
+    { name: 'Athuman Mbuga', role: 'Chief Technology Officer', image: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: 'Expert in medical device quality assurance', alt: 'Headshot of Athuman Mbuga, CTO of IP Medical Care' },
   ];
   
   // A component for animated number counters
