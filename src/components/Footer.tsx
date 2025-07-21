@@ -75,7 +75,7 @@ const Footer: React.FC = () => {
                 <div className="bg-gradient-to-br from-blue-500 to-teal-500 p-2 rounded-lg flex-shrink-0">
                   <Mail className="h-4 w-4 text-white" />
                 </div>
-                <p className="text-gray-300 text-sm">info@ipmedicalcare.co.tz</p>
+                <p className="text-gray-300 text-sm">info@ipmedicare.co.tz</p>
               </div>
             </div>
           </div>

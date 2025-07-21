@@ -25,16 +25,35 @@ const staggerContainer = (staggerChildren = 0.1, delayChildren = 0): Variants =>
 
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', company: '', phone: '', category: '', message: '', urgency: 'normal' });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>("idle");
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! We will be in touch shortly.');
-    setFormData({ name: '', email: '', company: '', phone: '', category: '', message: '', urgency: 'normal' });
+    setStatus('loading');
+    setError(null);
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', company: '', phone: '', category: '', message: '', urgency: 'normal' });
+      } else {
+        const data = await response.json();
+        setError(data.error || 'Failed to send message.');
+        setStatus('error');
+      }
+    } catch (err) {
+      setError('Network error. Please try again later.');
+      setStatus('error');
+    }
   };
 
   const contactInfo = [
@@ -101,7 +120,7 @@ const ContactPage: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div><label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">Full Name *</label><input type="text" id="name" name="name" required value={formData.name} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" placeholder="Your full name" /></div>
-                  <div><label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label><input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" placeholder="your.email@example.com" /></div>
+                  <div><label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label><input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" placeholder="info@ipmedicalcare.co.tz" /></div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div><label htmlFor="company" className="block text-sm font-semibold text-gray-700 mb-2">Company/Organization *</label><input type="text" id="company" name="company" required value={formData.company} onChange={handleChange} className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400" placeholder="Hospital/Clinic name" /></div>
@@ -114,6 +133,12 @@ const ContactPage: React.FC = () => {
                 <div><label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">Detailed Requirements *</label><textarea id="message" name="message" required value={formData.message} onChange={handleChange} rows={6} className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400 resize-none" placeholder="Please describe the specific medical equipment you need, quantities, budget range, and any special requirements..."/></div>
                 <button type="submit" className="w-full bg-gradient-to-r from-blue-600 via-teal-600 to-emerald-600 hover:from-emerald-600 hover:via-teal-600 hover:to-blue-600 text-white py-4 px-6 rounded-xl transition-all duration-300 flex items-center justify-center gap-3 font-bold shadow-lg hover:shadow-xl hover:scale-105 group"><Send className="h-5 w-5 group-hover:translate-x-1 transition-transform" />Send Quote Request</button>
               </form>
+              {status === 'success' && (
+                <div className="mt-4 p-4 bg-green-100 text-green-800 rounded-xl text-center font-semibold">Thank you for your message! We will be in touch shortly.</div>
+              )}
+              {status === 'error' && (
+                <div className="mt-4 p-4 bg-red-100 text-red-800 rounded-xl text-center font-semibold">{error}</div>
+              )}
               <div className="mt-8 p-6 bg-gradient-to-r from-blue-50 via-teal-50 to-emerald-50 rounded-2xl border border-blue-100"><p className="text-sm text-gray-700 text-center"><span className="font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">Fast Response Guarantee:</span> Call us at +255621232883 for urgent equipment needs or emergency support.</p></div>
             </div>
           </motion.div>

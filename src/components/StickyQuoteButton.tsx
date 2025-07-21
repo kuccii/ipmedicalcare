@@ -9,14 +9,31 @@ const StickyQuoteButton: React.FC = () => {
     company: '',
     message: ''
   });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>("idle");
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Quote request:', formData);
-    setIsOpen(false);
-    // Reset form
-    setFormData({ name: '', email: '', company: '', message: '' });
+    setStatus('loading');
+    setError(null);
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', company: '', message: '' });
+      } else {
+        const data = await response.json();
+        setError(data.error || 'Failed to send message.');
+        setStatus('error');
+      }
+    } catch (err) {
+      setError('Network error. Please try again later.');
+      setStatus('error');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -97,7 +114,7 @@ const StickyQuoteButton: React.FC = () => {
                     value={formData.email}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 hover:border-gray-400"
-                    placeholder="your.email@example.com"
+                    placeholder="info@ipmedicalcare.co.tz"
                   />
                 </div>
 
@@ -140,6 +157,13 @@ const StickyQuoteButton: React.FC = () => {
                   Send Quote Request
                 </button>
               </form>
+
+              {status === 'success' && (
+                <div className="mt-4 p-4 bg-green-100 text-green-800 rounded-xl text-center font-semibold">Thank you for your message! We will be in touch shortly.</div>
+              )}
+              {status === 'error' && (
+                <div className="mt-4 p-4 bg-red-100 text-red-800 rounded-xl text-center font-semibold">{error}</div>
+              )}
 
               <div className="mt-6 p-4 bg-gradient-to-r from-blue-50 via-teal-50 to-emerald-50 rounded-xl border border-blue-100">
                 <p className="text-xs text-gray-600 text-center">
