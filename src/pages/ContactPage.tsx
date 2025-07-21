@@ -23,6 +23,12 @@ const staggerContainer = (staggerChildren = 0.1, delayChildren = 0): Variants =>
   },
 });
 
+const getApiBase = () => {
+  if (import.meta.env.PROD) return '';
+  // Use your actual Vercel deployment URL below
+  return 'https://ipmedicalcare.vercel.app';
+};
+
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', company: '', phone: '', category: '', message: '', urgency: 'normal' });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>("idle");
@@ -37,7 +43,7 @@ const ContactPage: React.FC = () => {
     setStatus('loading');
     setError(null);
     try {
-      const response = await fetch('/api/send-email', {
+      const response = await fetch(`${getApiBase()}/api/send-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

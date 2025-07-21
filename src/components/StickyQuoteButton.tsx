@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { MessageCircle, X, Send } from 'lucide-react';
 
+const getApiBase = () => {
+  if (import.meta.env.PROD) return '';
+  // Use your actual Vercel deployment URL below
+  return 'https://ipmedicalcare.vercel.app';
+};
+
 const StickyQuoteButton: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -17,7 +23,7 @@ const StickyQuoteButton: React.FC = () => {
     setStatus('loading');
     setError(null);
     try {
-      const response = await fetch('/api/send-email', {
+      const response = await fetch(`${getApiBase()}/api/send-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
