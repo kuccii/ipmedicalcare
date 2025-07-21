@@ -1,7 +1,7 @@
-// Vercel serverless function using ES module syntax
-import nodemailer from 'nodemailer';
+// Vercel serverless function using CommonJS syntax for compatibility
+const nodemailer = require('nodemailer');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method not allowed' });
     return;
