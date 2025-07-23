@@ -1,6 +1,6 @@
-import nodemailer from 'nodemailer';
+const nodemailer = require('nodemailer');
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'Method not allowed' });
     return;
@@ -13,7 +13,6 @@ export default async function handler(req, res) {
     return;
   }
 
-  // Configure the SMTP transporter
   const transporter = nodemailer.createTransport({
     host: 'smtp.hostinger.com',
     port: 465,
@@ -38,4 +37,4 @@ export default async function handler(req, res) {
   } catch (error) {
     res.status(500).json({ error: 'Failed to send email', details: error });
   }
-} 
+}; 
