@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { Search, Package, Star, ArrowRight, CheckCircle, Layers, TestTube, HeartPulse, Activity, Filter, ChevronDown, X } from 'lucide-react';
+import { Search, Package, Star, ArrowRight, CheckCircle, Layers, TestTube, HeartPulse, Activity, Filter, ChevronDown, X, Mail, Phone, Building, User, MessageSquare, Calendar } from 'lucide-react';
 
 // Animation Variants remain the same
 const fadeIn = (direction: 'up' | 'down' | 'left' | 'right' = 'up', type: 'tween' | 'spring' = 'tween', delay = 0, duration = 0.6): Variants => ({
@@ -208,19 +208,35 @@ type FilterPanelProps = {
 const FilterPanel = ({ searchTerm, setSearchTerm, selectedCategory, setSelectedCategory, selectedBrand, setSelectedBrand }: FilterPanelProps) => (
     <div className="space-y-6">
         <div>
-            <label className="block text-sm font-bold text-slate-800 mb-2">Search Products</label>
+            <label className="block text-sm font-bold text-slate-800 mb-2 flex items-center gap-2">
+                <Search className="h-4 w-4 text-blue-600" />
+                Search Products
+            </label>
             <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
-                <input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="e.g. Stethoscope..." className="w-full pl-12 pr-4 py-3 bg-slate-100 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 shadow-sm" />
+                <input 
+                    type="text" 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    placeholder="Search by product name or brand..." 
+                    className="w-full pl-4 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition-all duration-200" 
+                />
             </div>
         </div>
         <div>
-            <label className="block text-sm font-bold text-slate-800 mb-2">Filter by Category</label>
-            <div className="flex flex-wrap gap-2">
+            <label className="block text-sm font-bold text-slate-800 mb-3">Filter by Category</label>
+            <div className="grid grid-cols-2 gap-2">
                 {categories.map((category) => (
-                    <button key={category.name} onClick={() => setSelectedCategory(category.name)}
-                        className={`px-3 py-2 rounded-full text-sm font-semibold transition-all duration-300 border-2 flex items-center gap-2 ${selectedCategory === category.name ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-slate-600 border-transparent hover:border-slate-300'}`}>
-                        <category.icon className="h-4 w-4" />{category.name}
+                    <button 
+                        key={category.name} 
+                        onClick={() => setSelectedCategory(category.name)}
+                        className={`px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 border-2 flex items-center gap-2 justify-center ${
+                            selectedCategory === category.name 
+                                ? 'bg-blue-600 text-white border-blue-600 shadow-lg' 
+                                : 'bg-white text-slate-600 border-slate-200 hover:border-blue-300 hover:bg-blue-50'
+                        }`}
+                    >
+                        <category.icon className="h-4 w-4" />
+                        {category.name}
                     </button>
                 ))}
             </div>
@@ -228,15 +244,226 @@ const FilterPanel = ({ searchTerm, setSearchTerm, selectedCategory, setSelectedC
         <div>
              <label className="block text-sm font-bold text-slate-800 mb-2">Filter by Brand</label>
              <div className="relative">
-                <select value={selectedBrand} onChange={(e) => setSelectedBrand(e.target.value)}
-                    className="w-full pl-4 pr-10 py-3 bg-slate-100 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 shadow-sm appearance-none font-semibold">
+                <select 
+                    value={selectedBrand} 
+                    onChange={(e) => setSelectedBrand(e.target.value)}
+                    className="w-full pl-4 pr-10 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm appearance-none font-semibold transition-all duration-200"
+                >
                     {brands.map(b => <option key={b} value={b}>{b}</option>)}
                 </select>
                 <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 pointer-events-none"/>
              </div>
         </div>
+        {(searchTerm || selectedCategory !== 'All Products' || selectedBrand !== 'All Brands') && (
+            <div className="pt-4 border-t border-slate-200">
+                <button 
+                    onClick={() => {
+                        setSearchTerm('');
+                        setSelectedCategory('All Products');
+                        setSelectedBrand('All Brands');
+                    }}
+                    className="w-full text-sm text-slate-600 hover:text-blue-600 font-medium transition-colors"
+                >
+                    Clear all filters
+                </button>
+            </div>
+        )}
     </div>
 );
+
+// Quote Request Modal Component
+type QuoteModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  product: any;
+};
+
+const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, product }) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    organization: '',
+    quantity: '1',
+    message: '',
+    preferredContact: 'email'
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Here you would typically send the data to your backend
+    console.log('Quote Request:', { product, formData });
+    alert('Thank you! Your quote request has been submitted. We will contact you within 24 hours.');
+    onClose();
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl mx-4 z-50"
+          >
+            <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+              {/* Header */}
+              <div className="bg-gradient-to-r from-blue-600 to-teal-600 text-white p-6">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h2 className="text-2xl font-bold mb-2">Request Quote</h2>
+                    <p className="text-blue-100">Get pricing for {product?.name}</p>
+                  </div>
+                  <button onClick={onClose} className="text-white/80 hover:text-white transition-colors">
+                    <X className="h-6 w-6" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Product Info */}
+              <div className="p-6 border-b border-slate-200">
+                <div className="flex items-center gap-4">
+                  <img src={product?.image} alt={product?.name} onError={handleImageError} className="w-16 h-16 object-contain rounded-lg bg-slate-100" />
+                  <div>
+                    <h3 className="font-bold text-lg text-slate-900">{product?.name}</h3>
+                    <p className="text-slate-600">{product?.brand}</p>
+                    <p className="text-sm text-slate-500">{product?.category}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Form */}
+              <form onSubmit={handleSubmit} className="p-6 space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Full Name *</label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                      <input
+                        type="text"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({...formData, name: e.target.value})}
+                        className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="Your full name"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Email *</label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                      <input
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="your@email.com"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Phone Number</label>
+                    <div className="relative">
+                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                      <input
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                        className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="+255 123 456 789"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Organization</label>
+                    <div className="relative">
+                      <Building className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                      <input
+                        type="text"
+                        value={formData.organization}
+                        onChange={(e) => setFormData({...formData, organization: e.target.value})}
+                        className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        placeholder="Hospital, Clinic, etc."
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Quantity Needed</label>
+                    <select
+                      value={formData.quantity}
+                      onChange={(e) => setFormData({...formData, quantity: e.target.value})}
+                      className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      {[1,2,3,4,5,6,7,8,9,10,15,20,25,30,50,100].map(num => (
+                        <option key={num} value={num}>{num} {num === 1 ? 'unit' : 'units'}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Preferred Contact</label>
+                    <select
+                      value={formData.preferredContact}
+                      onChange={(e) => setFormData({...formData, preferredContact: e.target.value})}
+                      className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="email">Email</option>
+                      <option value="phone">Phone</option>
+                      <option value="whatsapp">WhatsApp</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Additional Requirements</label>
+                  <div className="relative">
+                    <MessageSquare className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                    <textarea
+                      value={formData.message}
+                      onChange={(e) => setFormData({...formData, message: e.target.value})}
+                      rows={4}
+                      className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                      placeholder="Tell us about your specific requirements, delivery timeline, or any questions..."
+                    />
+                  </div>
+                </div>
+
+                <div className="flex gap-3 pt-4">
+                  <button
+                    type="submit"
+                    className="flex-1 bg-gradient-to-r from-blue-600 to-teal-600 text-white font-bold py-4 px-6 rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
+                  >
+                    <Mail className="h-5 w-5" />
+                    Submit Quote Request
+                  </button>
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="px-6 py-4 border border-slate-300 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+};
 
 // --- Main Page Component ---
 const ProductsPage: React.FC = () => {
@@ -245,6 +472,7 @@ const ProductsPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('All Products');
   const [selectedBrand, setSelectedBrand] = useState('All Brands');
   const [showFilters, setShowFilters] = useState(false);
+  const [quoteModal, setQuoteModal] = useState<{ isOpen: boolean; product: any }>({ isOpen: false, product: null });
 
   const filteredProducts = useMemo(() => {
     return allProductsWithAlts.filter(product => {
@@ -298,9 +526,17 @@ const ProductsPage: React.FC = () => {
                     <motion.div key={activeFeatured.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.4 }}>
                         <h3 className="text-3xl font-bold text-slate-900 mb-4">{activeFeatured.name}</h3>
                         <p className="text-slate-600 leading-relaxed mb-6">{activeFeatured.description}</p>
-                        <div className="flex flex-wrap gap-4">
+                        <div className="flex flex-wrap gap-4 mb-6">
                             {activeFeatured.specs.map(spec => (<div key={spec} className="flex items-center gap-2 text-sm font-medium text-slate-700 bg-slate-100 px-3 py-1.5 rounded-full"><CheckCircle className="h-4 w-4 text-emerald-500"/>{spec}</div>))}
                         </div>
+                        <button 
+                            onClick={() => setQuoteModal({ isOpen: true, product: activeFeatured })}
+                            className="bg-gradient-to-r from-blue-600 to-teal-600 text-white font-bold py-4 px-8 rounded-xl hover:shadow-lg transition-all duration-300 flex items-center gap-3 group"
+                        >
+                            <MessageSquare className="h-5 w-5" />
+                            Get Quote for {activeFeatured.name}
+                            <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                        </button>
                     </motion.div>
                 </AnimatePresence>
             </div>
@@ -324,7 +560,18 @@ const ProductsPage: React.FC = () => {
                 </div>
             </div>
 
-            <p className="text-center text-slate-500 mb-10 lg:-mt-6">Showing {filteredProducts.length} results.</p>
+            <div className="text-center mb-10 lg:-mt-6">
+                <p className="text-slate-600 font-medium">
+                    Showing <span className="text-blue-600 font-bold">{filteredProducts.length}</span> of <span className="text-slate-800 font-bold">{allProducts.length}</span> products
+                </p>
+                {(searchTerm || selectedCategory !== 'All Products' || selectedBrand !== 'All Brands') && (
+                    <p className="text-sm text-slate-500 mt-1">
+                        Filtered by: {selectedCategory !== 'All Products' && <span className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-xs mr-2">{selectedCategory}</span>}
+                        {selectedBrand !== 'All Brands' && <span className="bg-teal-100 text-teal-700 px-2 py-1 rounded-full text-xs mr-2">{selectedBrand}</span>}
+                        {searchTerm && <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded-full text-xs">"{searchTerm}"</span>}
+                    </p>
+                )}
+            </div>
             <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 <AnimatePresence>
                     {filteredProducts.map(product => (
@@ -332,13 +579,29 @@ const ProductsPage: React.FC = () => {
                             className="group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200/80 flex flex-col">
                             <div className="relative overflow-hidden h-56 flex items-center justify-center bg-white p-4">
                                 <img src={product.image} alt={product.alt || product.name} onError={handleImageError} className="max-h-full w-auto object-contain group-hover:scale-105 transition-transform duration-500" />
-                                <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
-                                    <button className="bg-white text-slate-800 font-bold py-3 px-6 rounded-lg scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300">Request a Quote</button>
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center p-6">
+                                    <button 
+                                        onClick={() => setQuoteModal({ isOpen: true, product })}
+                                        className="bg-white text-slate-800 font-bold py-3 px-6 rounded-xl scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 hover:bg-blue-50 hover:shadow-lg flex items-center gap-2"
+                                    >
+                                        <MessageSquare className="h-4 w-4" />
+                                        Get Quote
+                                    </button>
                                 </div>
                             </div>
                             <div className="p-5 flex flex-col flex-grow">
-                                <p className="text-xs font-semibold text-blue-600 uppercase mb-1">{product.brand}</p>
-                                <h3 className="font-bold text-lg text-slate-900 flex-grow">{product.name}</h3>
+                                <div className="flex items-center justify-between mb-2">
+                                    <p className="text-xs font-semibold text-blue-600 uppercase">{product.brand}</p>
+                                    <span className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-full">{product.category}</span>
+                                </div>
+                                <h3 className="font-bold text-lg text-slate-900 flex-grow mb-4">{product.name}</h3>
+                                <button 
+                                    onClick={() => setQuoteModal({ isOpen: true, product })}
+                                    className="w-full bg-gradient-to-r from-blue-600 to-teal-600 text-white font-semibold py-3 px-4 rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group-hover:scale-105"
+                                >
+                                    <MessageSquare className="h-4 w-4" />
+                                    Request Quote
+                                </button>
                             </div>
                         </motion.div>
                     ))}
@@ -385,6 +648,13 @@ const ProductsPage: React.FC = () => {
             </motion.div>
         </div>
       </section>
+
+      {/* Quote Request Modal */}
+      <QuoteModal 
+        isOpen={quoteModal.isOpen} 
+        onClose={() => setQuoteModal({ isOpen: false, product: null })} 
+        product={quoteModal.product} 
+      />
     </div>
   );
 };
