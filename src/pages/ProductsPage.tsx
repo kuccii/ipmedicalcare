@@ -560,15 +560,22 @@ const ProductsPage: React.FC = () => {
             </div>
 
             {/* --- Floating Filter Panel --- */}
-            <div className="hidden lg:block fixed top-24 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-4xl px-4">
-                <div className={`bg-white/95 backdrop-blur-lg rounded-xl border border-slate-200/60 p-4 transition-all duration-300 ${
-                    isScrolled ? 'shadow-xl shadow-slate-200/30' : 'shadow-lg'
-                }`}>
+            <div className={`hidden lg:block fixed top-24 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-4xl px-4 transition-all duration-300 ${
+                isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+            }`}>
+                <div className="bg-white/95 backdrop-blur-lg rounded-xl border border-slate-200/60 p-4 shadow-xl shadow-slate-200/30">
                     <FilterPanel searchTerm={searchTerm} setSearchTerm={setSearchTerm} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} selectedBrand={selectedBrand} setSelectedBrand={setSelectedBrand} />
                 </div>
             </div>
 
-            <div className="text-center mb-10 lg:pt-20">
+            {/* Static Filter for Top of Page */}
+            <div className="hidden lg:block mb-8">
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl border border-slate-200/60 p-4 shadow-sm">
+                    <FilterPanel searchTerm={searchTerm} setSearchTerm={setSearchTerm} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} selectedBrand={selectedBrand} setSelectedBrand={setSelectedBrand} />
+                </div>
+            </div>
+
+            <div className="text-center mb-10">
                 <p className="text-slate-600 font-medium">
                     Showing <span className="text-blue-600 font-bold">{filteredProducts.length}</span> of <span className="text-slate-800 font-bold">{allProducts.length}</span> products
                 </p>
