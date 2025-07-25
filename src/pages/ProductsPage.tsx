@@ -473,6 +473,18 @@ const ProductsPage: React.FC = () => {
   const [selectedBrand, setSelectedBrand] = useState('All Brands');
   const [showFilters, setShowFilters] = useState(false);
   const [quoteModal, setQuoteModal] = useState<{ isOpen: boolean; product: any }>({ isOpen: false, product: null });
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Handle scroll for sticky filter effect
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 100);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const filteredProducts = useMemo(() => {
     return allProductsWithAlts.filter(product => {
@@ -544,7 +556,7 @@ const ProductsPage: React.FC = () => {
       </section>
       
       {/* Main Catalog Section */}
-      <section id="catalog" className="py-20 lg:py-24 bg-slate-50">
+      <section id="catalog" className="py-20 lg:py-24 bg-slate-50 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* --- Mobile Filter Button --- */}
             <div className="lg:hidden mb-8">
@@ -554,8 +566,10 @@ const ProductsPage: React.FC = () => {
             </div>
 
             {/* --- Desktop Control Deck --- */}
-            <div className="hidden lg:block sticky top-[72px] z-30 mb-12">
-                <div className="bg-white/70 backdrop-blur-lg rounded-2xl shadow-lg border border-slate-200/80 p-6">
+            <div className="hidden lg:block sticky top-24 z-40 mb-12">
+                <div className={`bg-white/95 backdrop-blur-lg rounded-2xl border border-slate-200/80 p-6 transition-all duration-300 ${
+                    isScrolled ? 'shadow-2xl shadow-slate-200/50' : 'shadow-lg'
+                }`}>
                     <FilterPanel searchTerm={searchTerm} setSearchTerm={setSearchTerm} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} selectedBrand={selectedBrand} setSelectedBrand={setSelectedBrand} />
                 </div>
             </div>
