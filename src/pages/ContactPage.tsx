@@ -50,7 +50,7 @@ const ContactPage: React.FC = () => {
       });
       if (response.ok) {
         setStatus('success');
-        setFormData({ name: '', email: '', company: '', phone: '', category: '', message: '', urgency: 'normal' });
+    setFormData({ name: '', email: '', company: '', phone: '', category: '', message: '', urgency: 'normal' });
       } else {
         const data = await response.json();
         setError(data.error || 'Failed to send message.');

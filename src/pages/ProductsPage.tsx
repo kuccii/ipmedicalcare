@@ -28,7 +28,14 @@ const convertGoogleDriveLink = (driveLink: string): string => {
   if (!driveLink) return '';
   if (driveLink.includes('drive.google.com')) {
     const fileId = driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/)?.[1];
-    return fileId ? `https://drive.google.com/uc?export=view&id=${fileId}` : driveLink;
+    if (fileId) {
+      // Try multiple methods for Google Drive image access
+      // Method 1: Thumbnail API (most reliable)
+      return `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`;
+      // Alternative methods if needed:
+      // return `https://drive.google.com/uc?export=view&id=${fileId}`;
+      // return `https://docs.google.com/uc?id=${fileId}`;
+    }
   }
   return driveLink;
 };
@@ -116,6 +123,15 @@ const processedProducts = csvData.map(product => ({
   description: getProductDescription(product.name, product.brand, product.category),
   specs: getProductSpecs(product.name, product.brand, product.category)
 }));
+
+// Add error handling for image loading
+const handleImageError = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  const img = event.target as HTMLImageElement;
+  if (!img.src.includes('/medical-icon.svg')) {
+    img.src = '/medical-icon.svg';
+    img.alt = 'Medical equipment icon';
+  }
+};
 
 // Featured products (first 3 with images)
 const featuredProducts = processedProducts.filter(p => p.image !== '/medical-icon.svg').slice(0, 3);
@@ -265,13 +281,13 @@ const ProductsPage: React.FC = () => {
             </motion.div>
             <div className="grid lg:grid-cols-3 gap-8 items-center">
                 <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeIn('right')} className="lg:col-span-2 relative h-[500px] w-full bg-slate-100 rounded-2xl shadow-2xl border border-slate-200/80 p-4">
-                    <AnimatePresence mode="wait"><motion.img key={activeFeatured.id} src={activeFeatured.image} alt={activeFeatured.alt} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.4, ease: 'easeInOut' }} className="w-full h-full object-contain rounded-xl"/></AnimatePresence>
+                    <AnimatePresence mode="wait"><motion.img key={activeFeatured.id} src={activeFeatured.image} alt={activeFeatured.alt} onError={handleImageError} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.4, ease: 'easeInOut' }} className="w-full h-full object-contain rounded-xl"/></AnimatePresence>
                 </motion.div>
                 <motion.div initial="hidden" whileInView="show" viewport={{ once: true }} variants={staggerContainer(0.1)} className="flex lg:flex-col gap-4 overflow-x-auto lg:overflow-x-visible pb-4 lg:pb-0">
                     {featuredProducts.map(p => (
                         <motion.div key={p.id} variants={fadeIn('left')} onClick={() => setActiveFeatured(p)}
                             className={`p-4 rounded-xl border-2 transition-all duration-300 cursor-pointer flex-shrink-0 lg:flex-shrink-auto flex items-center gap-4 ${activeFeatured.id === p.id ? 'bg-white border-blue-500 shadow-lg' : 'bg-white border-transparent hover:border-slate-300'}`}>
-                            <img src={p.image} alt={p.alt} className="w-16 h-16 object-contain rounded-lg p-1 bg-slate-100"/>
+                            <img src={p.image} alt={p.alt} onError={handleImageError} className="w-16 h-16 object-contain rounded-lg p-1 bg-slate-100"/>
                             <div><h4 className="font-bold text-slate-800 leading-tight">{p.name}</h4><p className="text-xs text-slate-500">{p.brand}</p></div>
                         </motion.div>
                     ))}
@@ -315,7 +331,7 @@ const ProductsPage: React.FC = () => {
                         <motion.div key={product.id} layout initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.8 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                             className="group bg-white rounded-2xl shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden border border-slate-200/80 flex flex-col">
                             <div className="relative overflow-hidden h-56 flex items-center justify-center bg-white p-4">
-                                <img src={product.image} alt={product.alt || product.name} className="max-h-full w-auto object-contain group-hover:scale-105 transition-transform duration-500" />
+                                <img src={product.image} alt={product.alt || product.name} onError={handleImageError} className="max-h-full w-auto object-contain group-hover:scale-105 transition-transform duration-500" />
                                 <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4">
                                     <button className="bg-white text-slate-800 font-bold py-3 px-6 rounded-lg scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300">Request a Quote</button>
                                 </div>

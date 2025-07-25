@@ -30,7 +30,7 @@ const StickyQuoteButton: React.FC = () => {
       });
       if (response.ok) {
         setStatus('success');
-        setFormData({ name: '', email: '', company: '', message: '' });
+    setFormData({ name: '', email: '', company: '', message: '' });
       } else {
         const data = await response.json();
         setError(data.error || 'Failed to send message.');
