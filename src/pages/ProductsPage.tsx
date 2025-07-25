@@ -206,67 +206,61 @@ type FilterPanelProps = {
 };
 
 const FilterPanel = ({ searchTerm, setSearchTerm, selectedCategory, setSelectedCategory, selectedBrand, setSelectedBrand }: FilterPanelProps) => (
-    <div className="space-y-6">
-        <div>
-            <label className="block text-sm font-bold text-slate-800 mb-2 flex items-center gap-2">
-                <Search className="h-4 w-4 text-blue-600" />
-                Search Products
-            </label>
-            <div className="relative">
-                <input 
-                    type="text" 
-                    value={searchTerm} 
-                    onChange={(e) => setSearchTerm(e.target.value)} 
-                    placeholder="Search by product name or brand..." 
-                    className="w-full pl-4 pr-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition-all duration-200" 
-                />
-            </div>
+    <div className="space-y-4">
+        {/* Compact Search */}
+        <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <input 
+                type="text" 
+                value={searchTerm} 
+                onChange={(e) => setSearchTerm(e.target.value)} 
+                placeholder="Search products..." 
+                className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm transition-all duration-200" 
+            />
         </div>
-        <div>
-            <label className="block text-sm font-bold text-slate-800 mb-3">Filter by Category</label>
-            <div className="grid grid-cols-2 gap-2">
-                {categories.map((category) => (
-                    <button 
-                        key={category.name} 
-                        onClick={() => setSelectedCategory(category.name)}
-                        className={`px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 border-2 flex items-center gap-2 justify-center ${
-                            selectedCategory === category.name 
-                                ? 'bg-blue-600 text-white border-blue-600 shadow-lg' 
-                                : 'bg-white text-slate-600 border-slate-200 hover:border-blue-300 hover:bg-blue-50'
-                        }`}
-                    >
-                        <category.icon className="h-4 w-4" />
-                        {category.name}
-                    </button>
-                ))}
-            </div>
-        </div>
-        <div>
-             <label className="block text-sm font-bold text-slate-800 mb-2">Filter by Brand</label>
-             <div className="relative">
-                <select 
-                    value={selectedBrand} 
-                    onChange={(e) => setSelectedBrand(e.target.value)}
-                    className="w-full pl-4 pr-10 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 shadow-sm appearance-none font-semibold transition-all duration-200"
-                >
-                    {brands.map(b => <option key={b} value={b}>{b}</option>)}
-                </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400 pointer-events-none"/>
-             </div>
-        </div>
-        {(searchTerm || selectedCategory !== 'All Products' || selectedBrand !== 'All Brands') && (
-            <div className="pt-4 border-t border-slate-200">
+
+        {/* Modern Category Pills */}
+        <div className="flex flex-wrap gap-2">
+            {categories.map((category) => (
                 <button 
-                    onClick={() => {
-                        setSearchTerm('');
-                        setSelectedCategory('All Products');
-                        setSelectedBrand('All Brands');
-                    }}
-                    className="w-full text-sm text-slate-600 hover:text-blue-600 font-medium transition-colors"
+                    key={category.name} 
+                    onClick={() => setSelectedCategory(category.name)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 flex items-center gap-1.5 ${
+                        selectedCategory === category.name 
+                            ? 'bg-blue-600 text-white shadow-md' 
+                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    }`}
                 >
-                    Clear all filters
+                    <category.icon className="h-3 w-3" />
+                    {category.name}
                 </button>
-            </div>
+            ))}
+        </div>
+
+        {/* Compact Brand Filter */}
+        <div className="relative">
+            <select 
+                value={selectedBrand} 
+                onChange={(e) => setSelectedBrand(e.target.value)}
+                className="w-full pl-3 pr-8 py-2 bg-white border border-slate-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm appearance-none font-medium transition-all duration-200"
+            >
+                {brands.map(b => <option key={b} value={b}>{b}</option>)}
+            </select>
+            <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none"/>
+        </div>
+
+        {/* Clear Filters */}
+        {(searchTerm || selectedCategory !== 'All Products' || selectedBrand !== 'All Brands') && (
+            <button 
+                onClick={() => {
+                    setSearchTerm('');
+                    setSelectedCategory('All Products');
+                    setSelectedBrand('All Brands');
+                }}
+                className="w-full text-xs text-slate-500 hover:text-blue-600 font-medium transition-colors py-1"
+            >
+                Clear filters
+            </button>
         )}
     </div>
 );
@@ -559,22 +553,22 @@ const ProductsPage: React.FC = () => {
       <section id="catalog" className="py-20 lg:py-24 bg-slate-50 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* --- Mobile Filter Button --- */}
-            <div className="lg:hidden mb-8">
-                <button onClick={() => setShowFilters(true)} className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-white rounded-xl shadow-md font-bold text-slate-800 border border-slate-200">
-                    <Filter className="h-5 w-5 text-blue-600"/> Show Filters
+            <div className="lg:hidden mb-6">
+                <button onClick={() => setShowFilters(true)} className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-white rounded-lg shadow-sm font-medium text-slate-700 border border-slate-200">
+                    <Filter className="h-4 w-4 text-blue-600"/> Filters
                 </button>
             </div>
 
-            {/* --- Desktop Control Deck --- */}
-            <div className="hidden lg:block sticky top-24 z-40 mb-12">
-                <div className={`bg-white/95 backdrop-blur-lg rounded-2xl border border-slate-200/80 p-6 transition-all duration-300 ${
-                    isScrolled ? 'shadow-2xl shadow-slate-200/50' : 'shadow-lg'
+            {/* --- Floating Filter Panel --- */}
+            <div className="hidden lg:block fixed top-24 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-4xl px-4">
+                <div className={`bg-white/95 backdrop-blur-lg rounded-xl border border-slate-200/60 p-4 transition-all duration-300 ${
+                    isScrolled ? 'shadow-xl shadow-slate-200/30' : 'shadow-lg'
                 }`}>
                     <FilterPanel searchTerm={searchTerm} setSearchTerm={setSearchTerm} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} selectedBrand={selectedBrand} setSelectedBrand={setSelectedBrand} />
                 </div>
             </div>
 
-            <div className="text-center mb-10 lg:-mt-6">
+            <div className="text-center mb-10 lg:pt-20">
                 <p className="text-slate-600 font-medium">
                     Showing <span className="text-blue-600 font-bold">{filteredProducts.length}</span> of <span className="text-slate-800 font-bold">{allProducts.length}</span> products
                 </p>
