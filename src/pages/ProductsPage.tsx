@@ -467,18 +467,6 @@ const ProductsPage: React.FC = () => {
   const [selectedBrand, setSelectedBrand] = useState('All Brands');
   const [showFilters, setShowFilters] = useState(false);
   const [quoteModal, setQuoteModal] = useState<{ isOpen: boolean; product: any }>({ isOpen: false, product: null });
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  // Handle scroll for sticky filter effect
-  React.useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      setIsScrolled(scrollTop > 100);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const filteredProducts = useMemo(() => {
     return allProductsWithAlts.filter(product => {
@@ -559,14 +547,7 @@ const ProductsPage: React.FC = () => {
                 </button>
             </div>
 
-            {/* --- Floating Filter Panel --- */}
-            <div className={`hidden lg:block fixed top-24 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-4xl px-4 transition-all duration-300 ${
-                isScrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
-            }`}>
-                <div className="bg-white/95 backdrop-blur-lg rounded-xl border border-slate-200/60 p-4 shadow-xl shadow-slate-200/30">
-                    <FilterPanel searchTerm={searchTerm} setSearchTerm={setSearchTerm} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} selectedBrand={selectedBrand} setSelectedBrand={setSelectedBrand} />
-                </div>
-            </div>
+
 
             {/* Static Filter for Top of Page */}
             <div className="hidden lg:block mb-8">
