@@ -41,9 +41,9 @@ const AboutPage: React.FC = () => {
   ];
 
   const leadership = [
-    { name: 'Ipyana Steven Ulisaja', role: 'Managing Director', image: 'https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: '5 years experience in medical device industry', alt: 'Headshot of Ipyana Steven Ulisaja, Managing Director of IP Medical Care' },
-    { name: 'Loveness Mushi', role: 'General Manager', image: 'https://images.pexels.com/photos/5327650/pexels-photo-5327650.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: 'Healthcare management and operations expert', alt: 'Headshot of Loveness Mushi, General Manager of IP Medical Care' },
-    { name: 'Athuman Mbuga', role: 'Chief Technology Officer', image: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400', expertise: 'Expert in medical device quality assurance', alt: 'Headshot of Athuman Mbuga, CTO of IP Medical Care' },
+    { name: 'Ipyana Steven Ulisaja', role: 'Managing Director', image: '/ipyana.jpg', expertise: '5 years experience in medical device industry', alt: 'Headshot of Ipyana Steven Ulisaja, Managing Director of IP Medical Care' },
+    { name: 'Loveness Mushi', role: 'General Manager', image: '/mushi.jpg', expertise: 'Healthcare management and operations expert', alt: 'Headshot of Loveness Mushi, General Manager of IP Medical Care' },
+    { name: 'Athuman Mbuga', role: 'Chief Technology Officer', image: '/mbugha.jpg', expertise: 'Expert in medical device quality assurance', alt: 'Headshot of Athuman Mbuga, CTO of IP Medical Care' },
   ];
   
   // A component for animated number counters

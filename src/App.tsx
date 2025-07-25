@@ -1,3 +1,4 @@
+// Reminder: Replace 'G-XXXXXXXXXX' in main.tsx with your actual Google Analytics 4 Measurement ID.
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
