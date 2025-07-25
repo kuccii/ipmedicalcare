@@ -23,101 +23,156 @@ const staggerContainer = (staggerChildren = 0.1, delayChildren = 0): Variants =>
   show: { transition: { staggerChildren, delayChildren } },
 });
 
-// --- DATA (WITH VERIFIED, WORKING IMAGES) ---
-const featuredProducts = [
-    { id: 1, name: 'Littmann Classic III Stethoscope', brand: '3M Littmann', category: 'Diagnostics', image: 'https://cdn.shopify.com/s/files/1/0012/8440/7394/files/littmann-classic-iii-stethoscope-black-edition-5803-littmann-30886582714466.webp?v=1727168831&width=400', description: 'The industry standard for auscultation, offering high acoustic sensitivity for exceptional performance, plus a versatile two-sided chestpiece.', specs: ['Dual-sided Chestpiece', 'Tunable Diaphragm', '5-Year Warranty'], alt: 'Littmann Classic III Stethoscope in black' },
-    { id: 3, name: 'High-Speed Lab Centrifuge', brand: 'Thermo Fisher', category: 'Laboratory', image: 'https://cdn4.volusion.store/vccfs-mvxtd/v/vspfiles/photos/TSo-MX1R-2.jpg?v-cache=1728547766', description: 'A robust and quiet centrifuge for high-throughput sample processing. Features advanced safety protocols and an intuitive interface.', specs: ['4000 RPM Max Speed', '24-Tube Capacity', 'Quiet Operation'], alt: 'Thermo Fisher high-speed lab centrifuge' },
-    { id: 4, name: 'Portable 12-Lead ECG Monitor', brand: 'Mindray', category: 'Monitoring', image: 'https://image.made-in-china.com/365f3j00KRavMFiglOcj/Mindray-Beneheart-R12-Best-Price-Electrocardiograph-12-Lead-Full-Screen-Display-of-12-Channel-Waveforms-Portable-ECG-Machine.webp', description: 'Compact and lightweight, this ECG machine provides comprehensive cardiac analysis on its high-resolution color touchscreen.', specs: ['12-Lead Analysis', '7" Color Display', 'Wireless Data Transfer'], alt: 'Mindray portable 12-lead ECG monitor' },
+// Utility function to convert Google Drive links to direct image URLs
+const convertGoogleDriveLink = (driveLink: string): string => {
+  if (!driveLink) return '';
+  if (driveLink.includes('drive.google.com')) {
+    const fileId = driveLink.match(/\/d\/([a-zA-Z0-9-_]+)/)?.[1];
+    return fileId ? `https://drive.google.com/uc?export=view&id=${fileId}` : driveLink;
+  }
+  return driveLink;
+};
+
+// --- DATA FROM CSV ---
+const csvData = [
+  { id: 1, name: 'Littmann Classic III Stethoscope', brand: '3M Littmann', category: 'Diagnostics', image: '', alt: 'Littmann Classic III Stethoscope in black' },
+  { id: 3, name: 'High-Speed Lab Centrifuge', brand: 'Thermo Fisher', category: 'Laboratory', image: 'https://drive.google.com/file/d/1t5rVKgIcUapjONVqbItr1VbbaLVtUoaJ/view?usp=drive_link', alt: 'Thermo Fisher high-speed lab centrifuge' },
+  { id: 4, name: 'Portable 12-Lead ECG Monitor', brand: 'Mindray', category: 'Monitoring', image: 'https://drive.google.com/file/d/1xPuGTutLxeTJC-vobezHxQbVBpULgSG4/view?usp=drive_link', alt: 'Mindray portable 12-lead ECG monitor' },
+  { id: 2, name: 'Digital Pulse Oximeter', brand: 'Masimo', category: 'Monitoring', image: 'https://drive.google.com/file/d/18cVgE-uXhIQ7xQgX3bA2ir-jYUngKPNS/view?usp=drive_link', alt: 'Masimo digital pulse oximeter' },
+  { id: 19, name: 'Pulse Oximeter Edan H100B', brand: 'Edan', category: 'Monitoring', image: 'https://drive.google.com/file/d/1jOEvcpPozL0FriLXwDf9hYmlQiuU59w8/view?usp=drive_link', alt: 'Edan H100B pulse oximeter' },
+  { id: 20, name: 'Pulse Oximeter Contec CMS60D', brand: 'Contec', category: 'Monitoring', image: 'https://drive.google.com/file/d/1WEj6Fg3p9Qa8DL0LmcKQiYhhyOjlcCz8/view?usp=drive_link', alt: 'Contec CMS60D pulse oximeter' },
+  { id: 21, name: 'Handheld Pulse Oximeter', brand: 'Generic', category: 'Monitoring', image: 'https://drive.google.com/file/d/1B261hKPbPPBAdDq8aBAnUbdXEKZGAcW_/view?usp=drive_link', alt: 'Handheld pulse oximeter for mobile monitoring' },
+  { id: 22, name: 'Fingertip Pulse Oximeter (Benemed BX-11)', brand: 'Benemed', category: 'Monitoring', image: '', alt: 'Benemed BX-11 fingertip pulse oximeter' },
+  { id: 23, name: 'Infrared Thermometer Berrcom', brand: 'Berrcom', category: 'Diagnostics', image: 'https://drive.google.com/file/d/1wzLKGi5nS68U3_-5KBCc6rkGa3NHQ9Jc/view?usp=drive_link', alt: 'Berrcom non-contact infrared thermometer' },
+  { id: 24, name: 'Infrared Thermometer Wiselion', brand: 'Wiselion', category: 'Diagnostics', image: 'https://drive.google.com/file/d/1ry_1-N4Mvnt8I111OxH5umlRvyYGFz61/view?usp=drive_link', alt: 'Wiselion infrared thermometer' },
+  { id: 25, name: 'Digital BP Monitor', brand: 'Omron', category: 'Diagnostics', image: 'https://drive.google.com/file/d/1eD-S-i05_23M1hMRIL9L3clif-k_KfRf/view?usp=drive_link', alt: 'Omron digital blood pressure monitor' },
+  { id: 26, name: 'BP Machine Armstyle', brand: 'Generic', category: 'Diagnostics', image: 'https://drive.google.com/file/d/19uiwS6-cY2DSMFfz2UKaV8PTeGZTivj3/view?usp=drive_link', alt: 'Arm-style blood pressure machine' },
+  { id: 27, name: 'BP Machine Wrist (CK-101S)', brand: 'CK', category: 'Diagnostics', image: 'https://drive.google.com/file/d/1tLDoV_DxPx3w4JTon7rWURxsX9H2g0fF/view?usp=drive_link', alt: 'CK-101S wrist blood pressure machine' },
+  { id: 28, name: 'BP Machine Wrist (CK-W132)', brand: 'CK', category: 'Diagnostics', image: 'https://drive.google.com/file/d/1tLDoV_DxPx3w4JTon7rWURxsX9H2g0fF/view?usp=drive_link', alt: 'CK-W132 wrist blood pressure machine' },
+  { id: 29, name: 'Blood Glucose Monitor Gluconavii', brand: 'Gluconavii', category: 'Diagnostics', image: 'https://drive.google.com/file/d/1K0jH3xTFE4Wexzs_BA5JNHpwCEnqgyVl/view?usp=drive_link', alt: 'Gluconavii blood glucose monitor' },
+  { id: 30, name: 'Quantum Analyzer Gold', brand: 'Quantum', category: 'Diagnostics', image: 'https://drive.google.com/file/d/1GhVrA7I0wp5joJ-jpVnTsdCwMBWxM3HS/view?usp=drive_link', alt: 'Gold Quantum resonance magnetic analyzer' },
+  { id: 31, name: 'Quantum Analyzer Black', brand: 'Quantum', category: 'Diagnostics', image: 'https://drive.google.com/file/d/1FD8-PO6vpSgvPTUTC3n44A_6fOzLs_F_/view?usp=drive_link', alt: 'Black Quantum resonance magnetic analyzer' },
+  { id: 32, name: 'Tens Massager', brand: 'Generic', category: 'Diagnostics', image: 'https://drive.google.com/file/d/1h2UoD-mvfVtxTfPRosecmS1zZNlJDfa6/view?usp=drive_link', alt: 'TENS unit muscle stimulator and massager' },
+  { id: 33, name: 'Personal Weight Scale Digital', brand: 'Generic', category: 'Diagnostics', image: 'https://drive.google.com/file/d/1zeWBAofZYZa1Uili9j3H3YM7uY2zoHp9/view?usp=drive_link', alt: 'Digital personal weight scale' },
+  { id: 34, name: 'Personal Weight Scale Manual', brand: 'Generic', category: 'Diagnostics', image: 'https://drive.google.com/file/d/16X4srKEGVtVEclSmNNyVpRt3Cv_Jm2qB/view?usp=drive_link', alt: 'Manual personal weight scale' },
+  { id: 35, name: 'Seca Weight Scale Seca 700', brand: 'Seca', category: 'Diagnostics', image: 'https://drive.google.com/file/d/17xIF3JXilaXhHCwUCkNUbsNNa-0A-j2V/view?usp=drive_link', alt: 'Seca 700 mechanical column weight scale' },
+  { id: 36, name: 'Seca Weight and Height Scale Seca 777', brand: 'Seca', category: 'Diagnostics', image: 'https://drive.google.com/file/d/19vJGV_8OPyIdgH6caz2GBKfEj-7npvRw/view?usp=drive_link', alt: 'Seca 777 digital weight and height scale' },
+  { id: 5, name: 'Automated Chemistry Analyzer', brand: 'Roche', category: 'Laboratory', image: 'https://drive.google.com/file/d/1zj5zDpRfQamA_9nx5TPNJtkryLM30593/view?usp=drive_link', alt: 'Roche automated chemistry analyzer' },
+  { id: 10, name: 'Vacutainer Needle', brand: 'BD', category: 'Laboratory', image: 'https://drive.google.com/file/d/1CFRIKzvhxVKBR6QTd6QcbFhF5L_YY2an/view?usp=drive_link', alt: 'BD Vacutainer needle for blood collection' },
+  { id: 37, name: 'Test Tube Rack White', brand: 'Generic', category: 'Laboratory', image: 'https://drive.google.com/file/d/1_FZUA7Pdl_FQeg5YxASwIWnNmMTkVOMb/view?usp=drive_link', alt: 'White laboratory test tube rack' },
+  { id: 38, name: 'Test Tube Rack Pale Green', brand: 'Generic', category: 'Laboratory', image: 'https://drive.google.com/file/d/1K_GI90GevLu4qrmf8XAJBQXBpH-Wu_F6/view?usp=drive_link', alt: 'Pale green laboratory test tube rack' },
+  { id: 39, name: 'Falcon Tubes', brand: 'Falcon', category: 'Laboratory', image: 'https://drive.google.com/file/d/1IVeKapjbSMxh-bHFLM57xc9qKbO8An18/view?usp=drive_link', alt: 'Falcon conical centrifuge tubes' },
+  { id: 40, name: 'Centrifuge Tubes', brand: 'Servicebio', category: 'Laboratory', image: 'https://drive.google.com/file/d/1Gy4rZ2rTeVDbco8befDkh--Dj-Rq8jcR/view?usp=drive_link', alt: 'Servicebio centrifuge tubes' },
+  { id: 41, name: 'Falcon Tube Large', brand: 'Falcon', category: 'Laboratory', image: 'https://drive.google.com/file/d/1IVeKapjbSMxh-bHFLM57xc9qKbO8An18/view?usp=drive_link', alt: 'Large Falcon conical centrifuge tube' },
+  { id: 42, name: 'Sterile Swab Stick', brand: 'Rabex', category: 'Laboratory', image: 'https://drive.google.com/file/d/1ntRfkAB4-LJReJj1LgjesaegaG2wJfim/view?usp=drive_link', alt: 'Rabex sterile swab stick' },
+  { id: 43, name: 'Stool Container', brand: 'Generic', category: 'Laboratory', image: 'https://drive.google.com/file/d/1ZNURaInrcYHhXdO3ZxtFioP3zIojMVa-/view?usp=drive_link', alt: 'Sterile stool sample container' },
+  { id: 44, name: 'Timer TA732', brand: 'Generic', category: 'Laboratory', image: 'https://drive.google.com/file/d/1rXDv2baA7W_shOBhz2FuDKIAvclqG8U3/view?usp=drive_link', alt: 'TA732 laboratory timer' },
+  { id: 7, name: 'Intensive Care Ventilator', brand: 'Dräger', category: 'ICU', image: 'https://drive.google.com/file/d/1Bmsf0S-kB83MhLKrxIzIU7g304cxnbDR/view?usp=drive_link', alt: 'Dräger intensive care ventilator' },
+  { id: 9, name: 'Emergency Ventilator', brand: 'Oxivent', category: 'ICU', image: 'https://drive.google.com/file/d/1M5zJX1S8DgKOMFGTWeIYsZk-FEyQ2lJU/view?usp=drive_link', alt: 'Emergency transport ventilator' },
+  { id: 45, name: 'Infusion Pump Mindray (Benefusion Uvp)', brand: 'Mindray', category: 'ICU', image: 'https://drive.google.com/file/d/1WTW0FN02TSVbpjZ7iynOCedx6jAFyRMQ/view?usp=drive_link', alt: 'Mindray Benefusion UVP infusion pump' },
+  { id: 46, name: 'Infusion Pump Mindray (Benefusion VP3)', brand: 'Mindray', category: 'ICU', image: 'https://drive.google.com/file/d/1aCoH0sp6jM26SOlk4b2BJyN33snCt5Hr/view?usp=drive_link', alt: 'Mindray Benefusion VP3 infusion pump' },
+  { id: 47, name: 'Infrared Vein Finder XG-900', brand: 'Generic', category: 'ICU', image: 'https://drive.google.com/file/d/1CspERAHkFbgp7aqcyWVB5LooecEV5h-t/view?usp=drive_link', alt: 'XG-900 infrared vein finder' },
+  { id: 8, name: 'Surgical Instrument Set', brand: 'B. Braun', category: 'Surgical', image: 'https://drive.google.com/file/d/1GWGdZTcF7PSLK4ZwDCctZM2GzSMoAaFI/view?usp=drive_link', alt: 'B. Braun surgical instrument set' },
+  { id: 48, name: 'Ambu Bag Infant/Neonate', brand: 'Generic', category: 'Surgical', image: 'https://drive.google.com/file/d/1ocsI0WtTdZUJ2rpxX-i0Mfyr-tG30EkJ/view?usp=drive_link', alt: 'Infant/neonate ambu bag resuscitator' },
+  { id: 49, name: 'Manual Resuscitator', brand: 'Generic', category: 'Surgical', image: 'https://drive.google.com/file/d/1qKmmfQdcjNyvAifcGrYoiO6FNF_YfRUq/view?usp=drive_link', alt: 'Manual resuscitator (ambu bag)' },
+  { id: 50, name: 'Mama Delivery Kit', brand: 'Generic', category: 'Surgical', image: '', alt: 'Mama delivery kit for childbirth' },
+  { id: 51, name: 'Surgical Equips', brand: 'Generic', category: 'Surgical', image: 'https://drive.google.com/file/d/1GWGdZTcF7PSLK4ZwDCctZM2GzSMoAaFI/view?usp=drive_link', alt: 'Assorted surgical equipment' },
+  { id: 11, name: 'Hospital Bed', brand: 'Generic', category: 'Mobility', image: 'https://drive.google.com/file/d/1T5PMNWOJ4Sdvv24Gp6NbKFdpVe4JGaWM/view?usp=drive_link', alt: 'Adjustable hospital bed' },
+  { id: 12, name: 'Wheelchair', brand: 'Generic', category: 'Mobility', image: 'https://drive.google.com/file/d/14oFeT-46Jgy_LEWFaYhV3d3zDaj1ORB_/view?usp=drive_link', alt: 'Standard manual wheelchair' },
+  { id: 13, name: 'Crutches', brand: 'Generic', category: 'Mobility', image: 'https://drive.google.com/file/d/19aBIC5w8pT53Iey6HnzporpfIzhIQFkm/view?usp=drive_link', alt: 'Underarm crutches for mobility support' },
+  { id: 14, name: 'Walking Aid', brand: 'Generic', category: 'Mobility', image: 'https://drive.google.com/file/d/1lW87jXOiF1wmKobKkue_hJCQgjeAUR_8/view?usp=drive_link', alt: 'Walking frame aid for mobility support' },
+  { id: 15, name: 'Orthopaedic Support', brand: 'Generic', category: 'Orthopaedics', image: 'https://drive.google.com/file/d/18VN9Fw8k2zbQP-7WnbDQ58GS1asgvMr0/view?usp=drive_link', alt: 'Orthopaedic support brace' },
+  { id: 16, name: 'Commode Chair', brand: 'Generic', category: 'Mobility', image: 'https://drive.google.com/file/d/1SDoRcJ5Wg0OTrwe0rdrV_W2svordKjM8/view?usp=drive_link', alt: 'Bedside commode chair' },
+  { id: 17, name: 'Air Mattress', brand: 'Generic', category: 'Mobility', image: 'https://drive.google.com/file/d/1tFcVAgA_SXvLnbPqe8ApbWzgMBtIKD7O/view?usp=drive_link', alt: 'Alternating pressure air mattress for bedsore prevention' },
+  { id: 18, name: 'Nebulizer Machine', brand: 'Generic', category: 'Diagnostics', image: 'https://drive.google.com/file/d/1atnwkDk87Yix8H7tAxwvR0-Y_mE5_SPG/view?usp=drive_link', alt: 'Portable nebulizer machine for respiratory therapy' },
+  { id: 52, name: 'Face Mask KN95 Folding', brand: 'Generic', category: 'Consumables', image: 'https://drive.google.com/file/d/1xp8IaHMl6lCgS8EQdCrtu9qd0c2rG-hF/view?usp=drive_link', alt: 'KN95 folding face mask' },
+  { id: 53, name: 'Face Mask KN95', brand: 'Generic', category: 'Consumables', image: 'https://drive.google.com/file/d/18eXNtPM4x5zNs44ubkNpzTokvahm17H8/view?usp=drive_link', alt: 'KN95 face mask' },
+  { id: 54, name: 'Face Shield', brand: 'Generic', category: 'Consumables', image: 'https://drive.google.com/file/d/1-SUFc-LBoz4dP2WfRyVwz3VDW881gpSa/view?usp=drive_link', alt: 'Protective face shield' },
+  { id: 55, name: 'Cotton Wool Neosafe', brand: 'Neosafe', category: 'Consumables', image: 'https://drive.google.com/file/d/1VkwhxNj6YYlfHuf3bjxJrasfXlow7wZY/view?usp=drive_link', alt: 'Neosafe medical cotton wool' },
+  { id: 56, name: 'Cotton WOW Bandages Neosafe', brand: 'Neosafe', category: 'Consumables', image: 'https://drive.google.com/file/d/1L4kd5ig2X2r1KzV4cEjHr8HYhtRtic20/view?usp=drive_link', alt: 'Neosafe cotton WOW bandages' },
+  { id: 57, name: 'Tongue Depressor Wooden Type', brand: 'Generic', category: 'Consumables', image: 'https://drive.google.com/file/d/1huhXnZkMISNdWLsMI_gqtCt47YP960tT/view?usp=drive_link', alt: 'Wooden tongue depressor' },
+  { id: 58, name: 'IV Cannula Neovac', brand: 'Neovac', category: 'Consumables', image: 'https://drive.google.com/file/d/1sRnKOYjdqexCZFJBVcAcX1RQrY7L-usM/view?usp=drive_link', alt: 'Neovac IV cannula' },
+  { id: 59, name: 'Zinc Oxide Plaster', brand: 'Generic', category: 'Consumables', image: 'https://drive.google.com/file/d/1e2kx8PQdhr4b7stavWBSEPHFziyhS-Gt/view?usp=drive_link', alt: 'Roll of zinc oxide adhesive plaster' },
+  { id: 60, name: 'Biohazard Bags Red', brand: 'Generic', category: 'Consumables', image: 'https://drive.google.com/file/d/1G0pgGaw8YlrczEYI_Dcr3pC0qDfpF9g3/view?usp=drive_link', alt: 'Red biohazard waste bag' },
+  { id: 61, name: 'Biohazard Bags Black', brand: 'Generic', category: 'Consumables', image: 'https://drive.google.com/file/d/1vV8jTzez8zWtFhsDbogkYOvapUMnYpKJ/view?usp=drive_link', alt: 'Black biohazard waste bag' },
+  { id: 62, name: 'Biohazard Bags Yellow', brand: 'Generic', category: 'Consumables', image: 'https://drive.google.com/file/d/1S3vx6F9qguYkt9ogc7rLybABjyD7EoyK/view?usp=drive_link', alt: 'Yellow biohazard waste bag' },
+  { id: 63, name: 'Aniosept Tabs Laboratoires', brand: 'Laboratoires', category: 'Consumables', image: 'https://drive.google.com/file/d/17YJtWFsqgSpxSFdjYKSErEG2AwGKk5Vv/view?usp=drive_link', alt: 'Laboratoires Aniosept disinfectant tablets' },
+  { id: 64, name: 'First Aid Box', brand: 'Generic', category: 'Miscellaneous', image: 'https://drive.google.com/file/d/1jw6ybAwgeydvnY6ZyPaxUAuyuWCzOtFu/view?usp=drive_link', alt: 'First aid box' },
+  { id: 65, name: 'Examination Light', brand: 'Generic', category: 'Miscellaneous', image: 'https://drive.google.com/file/d/1aS78z4xjphwZ43Ml5LSOOuScPYCyRjYT/view?usp=drive_link', alt: 'Medical examination light' },
+  { id: 66, name: 'Florican Anklet', brand: 'Florican', category: 'Orthopaedics', image: 'https://drive.google.com/file/d/1xZKMC0APGgHYcbB9OuY4Q2TCM0oTZdxc/view?usp=drive_link', alt: 'Florican orthopaedic anklet support' },
+  { id: 67, name: 'Sensors Probe', brand: 'Generic', category: 'Monitoring', image: 'https://drive.google.com/file/d/16LbiVAq9BfjtHrhjiyLLm_t0NhCB5Vst/view?usp=drive_link', alt: 'Medical sensor probe' },
+  { id: 68, name: 'Infant Sensor', brand: 'Generic', category: 'Monitoring', image: 'https://drive.google.com/file/d/1cY5J2GqhmlWbVFJdkb6wnQqGODZ4awsl/view?usp=drive_link', alt: 'Infant medical monitoring sensor' },
+  { id: 69, name: 'Rapid Diagnostic Test Medsource', brand: 'Medsource', category: 'Diagnostics', image: '', alt: 'Medsource rapid diagnostic test kit' },
+  { id: 70, name: 'Triple Blood Bag', brand: 'Generic', category: 'Laboratory', image: 'https://drive.google.com/file/d/1R5uIaXC83FN6EFb4AdcuVkSS0D9n225A/view?usp=drive_link', alt: 'Triple blood bag for blood collection and separation' },
+  { id: 71, name: 'Crocs', brand: 'Generic', category: 'Miscellaneous', image: 'https://drive.google.com/file/d/1KzuUtIkTNfwMLt2Gc6CfNSujFNbzXtMo/view?usp=drive_link', alt: 'Medical clogs (Crocs)' },
+  { id: 72, name: 'Yellow Tips', brand: 'Generic', category: 'Laboratory', image: 'https://drive.google.com/file/d/1IdPaX_USyYLsb5EZMDoBgaihTYX0mXBK/view?usp=drive_link', alt: 'Yellow pipette tips for laboratory use' },
+  { id: 73, name: 'Blue Tips', brand: 'Generic', category: 'Laboratory', image: '', alt: 'Blue pipette tips for laboratory use' },
 ];
-const allProducts = [
-    { id: 1, name: 'Littmann Classic III Stethoscope', brand: '3M Littmann', category: 'Diagnostics', image: 'https://cdn.shopify.com/s/files/1/0012/8440/7394/files/littmann-classic-iii-stethoscope-black-edition-5803-littmann-30886582714466.webp?v=1727168831&width=400', description: 'The industry standard for auscultation, offering high acoustic sensitivity for exceptional performance, plus a versatile two-sided chestpiece.', specs: ['Dual-sided Chestpiece', 'Tunable Diaphragm', '5-Year Warranty'], alt: 'Littmann Classic III Stethoscope in black' },
-    { id: 3, name: 'High-Speed Lab Centrifuge', brand: 'Thermo Fisher', category: 'Laboratory', image: 'https://cdn4.volusion.store/vccfs-mvxtd/v/vspfiles/photos/TSo-MX1R-2.jpg?v-cache=1728547766', description: 'A robust and quiet centrifuge for high-throughput sample processing. Features advanced safety protocols and an intuitive interface.', specs: ['4000 RPM Max Speed', '24-Tube Capacity', 'Quiet Operation'], alt: 'Thermo Fisher high-speed lab centrifuge' },
-    { id: 4, name: 'Portable 12-Lead ECG Monitor', brand: 'Mindray', category: 'Monitoring', image: 'https://image.made-in-china.com/365f3j00KRavMFiglOcj/Mindray-Beneheart-R12-Best-Price-Electrocardiograph-12-Lead-Full-Screen-Display-of-12-Channel-Waveforms-Portable-ECG-Machine.webp', description: 'Compact and lightweight, this ECG machine provides comprehensive cardiac analysis on its high-resolution color touchscreen.', specs: ['12-Lead Analysis', '7" Color Display', 'Wireless Data Transfer'], alt: 'Mindray portable 12-lead ECG monitor' },
-    // Monitoring
-    { id: 2, name: 'Digital Pulse Oximeter', brand: 'Masimo', category: 'Monitoring', image: 'https://images.axios.com/FwULssiaIuGHUn7iHaF5QcpMVTM=/0x410:6123x3854/1920x1080/2024/02/01/1706819737544.jpg', alt: 'Masimo digital pulse oximeter' },
-    { id: 19, name: 'Pulse Oximeter Edan H100B', brand: 'Edan', category: 'Monitoring', image: 'https://www.edan.com/uploads/2021/11/17/1637138571.jpg', alt: 'Edan H100B pulse oximeter' },
-    { id: 20, name: 'Pulse Oximeter Contec CMS60D', brand: 'Contec', category: 'Monitoring', image: 'https://www.contecmed.com/uploads/soft/220421/1-2204211GQ2B2.jpg', alt: 'Contec CMS60D pulse oximeter' },
-    { id: 21, name: 'Handheld Pulse Oximeter', brand: 'Generic', category: 'Monitoring', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/handheld-pulse-oximeter-500x500.jpg', alt: 'Handheld pulse oximeter for mobile monitoring' },
-    { id: 22, name: 'Fingertip Pulse Oximeter (Benemed BX-11)', brand: 'Benemed', category: 'Monitoring', image: 'https://benemed.com/wp-content/uploads/2021/07/BX-11.jpg', alt: 'Benemed BX-11 fingertip pulse oximeter' },
-    // Diagnostics
-    { id: 23, name: 'Infrared Thermometer Berrcom', brand: 'Berrcom', category: 'Diagnostics', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/infrared-thermometer-500x500.jpg', alt: 'Berrcom non-contact infrared thermometer' },
-    { id: 24, name: 'Infrared Thermometer Wiselion', brand: 'Wiselion', category: 'Diagnostics', image: 'https://www.wiselion.com.tw/upload/product/20200909155313_1.jpg', alt: 'Wiselion infrared thermometer' },
-    { id: 25, name: 'Digital BP Monitor', brand: 'Omron', category: 'Diagnostics', image: 'https://5.imimg.com/data5/SELLER/Default/2023/3/HT/AA/EP/783049/wrist-blood-pressure-monitor-500x500.jpg', alt: 'Omron digital blood pressure monitor' },
-    { id: 26, name: 'BP Machine Armstyle', brand: 'Generic', category: 'Diagnostics', image: 'https://5.imimg.com/data5/SELLER/Default/2023/3/HT/AA/EP/783049/wrist-blood-pressure-monitor-500x500.jpg', alt: 'Arm-style blood pressure machine' },
-    { id: 27, name: 'BP Machine Wrist (CK-101S)', brand: 'CK', category: 'Diagnostics', image: 'https://5.imimg.com/data5/SELLER/Default/2023/3/HT/AA/EP/783049/wrist-blood-pressure-monitor-500x500.jpg', alt: 'CK-101S wrist blood pressure machine' },
-    { id: 28, name: 'BP Machine Wrist (CK-W132)', brand: 'CK', category: 'Diagnostics', image: 'https://5.imimg.com/data5/SELLER/Default/2023/3/HT/AA/EP/783049/wrist-blood-pressure-monitor-500x500.jpg', alt: 'CK-W132 wrist blood pressure machine' },
-    { id: 29, name: 'Blood Glucose Monitor Gluconavii', brand: 'Gluconavii', category: 'Diagnostics', image: 'https://www.gluconavii.com/wp-content/uploads/2019/07/DSC_0002-1.jpg', alt: 'Gluconavii blood glucose monitor' },
-    { id: 30, name: 'Quantum Analyzer Gold', brand: 'Quantum', category: 'Diagnostics', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/quantum-resonance-magnetic-analyzer-500x500.jpg', alt: 'Gold Quantum resonance magnetic analyzer' },
-    { id: 31, name: 'Quantum Analyzer Black', brand: 'Quantum', category: 'Diagnostics', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/quantum-resonance-magnetic-analyzer-500x500.jpg', alt: 'Black Quantum resonance magnetic analyzer' },
-    { id: 32, name: 'Tens Massager', brand: 'Generic', category: 'Diagnostics', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/tens-massager-500x500.jpg', alt: 'TENS unit muscle stimulator and massager' },
-    { id: 33, name: 'Personal Weight Scale Digital', brand: 'Generic', category: 'Diagnostics', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/digital-weight-scale-500x500.jpg', alt: 'Digital personal weight scale' },
-    { id: 34, name: 'Personal Weight Scale Manual', brand: 'Generic', category: 'Diagnostics', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/manual-weight-scale-500x500.jpg', alt: 'Manual personal weight scale' },
-    { id: 35, name: 'Seca Weight Scale Seca 700', brand: 'Seca', category: 'Diagnostics', image: 'https://www.seca.com/fileadmin/_processed_/csm_700_01_2c7e2e2e7e.jpg', alt: 'Seca 700 mechanical column weight scale' },
-    { id: 36, name: 'Seca Weight and Height Scale Seca 777', brand: 'Seca', category: 'Diagnostics', image: 'https://www.seca.com/fileadmin/_processed_/csm_777_01_2c7e2e2e7e.jpg', alt: 'Seca 777 digital weight and height scale' },
-    // Laboratory
-    { id: 5, name: 'Automated Chemistry Analyzer', brand: 'Roche', category: 'Laboratory', image: 'https://www.human.de/01_CoreLab_DX/Clinical_Chemistry/HumaStar_Systems/HumaStar_300SR/Pictures/21944/image-thumb__21944__product-image-lightbox/16930_HumaStar_300SR_right_view.png', alt: 'Roche automated chemistry analyzer' },
-    { id: 10, name: 'Vacutainer Needle', brand: 'BD', category: 'Laboratory', image: 'https://www.bd.com/resource.aspx?IDX=18313', alt: 'BD Vacutainer needle for blood collection' },
-    { id: 37, name: 'Test Tube Rack White', brand: 'Generic', category: 'Laboratory', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/test-tube-rack-500x500.jpg', alt: 'White laboratory test tube rack' },
-    { id: 38, name: 'Test Tube Rack Pale Green', brand: 'Generic', category: 'Laboratory', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/test-tube-rack-500x500.jpg', alt: 'Pale green laboratory test tube rack' },
-    { id: 39, name: 'Falcon Tubes', brand: 'Falcon', category: 'Laboratory', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/falcon-tube-500x500.jpg', alt: 'Falcon conical centrifuge tubes' },
-    { id: 40, name: 'Centrifuge Tubes', brand: 'Servicebio', category: 'Laboratory', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/centrifuge-tube-500x500.jpg', alt: 'Servicebio centrifuge tubes' },
-    { id: 41, name: 'Falcon Tube Large', brand: 'Falcon', category: 'Laboratory', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/falcon-tube-500x500.jpg', alt: 'Large Falcon conical centrifuge tube' },
-    { id: 42, name: 'Sterile Swab Stick', brand: 'Rabex', category: 'Laboratory', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/swab-stick-500x500.jpg', alt: 'Rabex sterile swab stick' },
-    { id: 43, name: 'Stool Container', brand: 'Generic', category: 'Laboratory', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/stool-container-500x500.jpg', alt: 'Sterile stool sample container' },
-    { id: 44, name: 'Timer TA732', brand: 'Generic', category: 'Laboratory', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/timer-500x500.jpg', alt: 'TA732 laboratory timer' },
-    // ICU
-    { id: 7, name: 'Intensive Care Ventilator', brand: 'Dräger', category: 'ICU', image: 'https://utasco.com/wp-content/uploads/2022/02/icu-ventilator-uvent-t-s-product-image.png', alt: 'Dräger intensive care ventilator' },
-    { id: 9, name: 'Emergency Ventilator', brand: 'Generic', category: 'ICU', image: 'https://www.usa.philips.com/c-dam/b2bhc/master/landing-pages/ventilator/philips-ventilator-ev300.jpg', alt: 'Emergency transport ventilator' },
-    { id: 45, name: 'Infusion Pump Mindray (Benefusion Uvp)', brand: 'Mindray', category: 'ICU', image: 'https://www.mindraynorthamerica.com/wp-content/uploads/2020/09/benefusion-uVP-1.jpg', alt: 'Mindray Benefusion UVP infusion pump' },
-    { id: 46, name: 'Infusion Pump Mindray (Benefusion VP3)', brand: 'Mindray', category: 'ICU', image: 'https://www.mindraynorthamerica.com/wp-content/uploads/2020/09/benefusion-vp3-1.jpg', alt: 'Mindray Benefusion VP3 infusion pump' },
-    { id: 47, name: 'Infrared Vein Finder XG-900', brand: 'Generic', category: 'ICU', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/vein-finder-500x500.jpg', alt: 'XG-900 infrared vein finder' },
-    // Surgical
-    { id: 8, name: 'Surgical Instrument Set', brand: 'B. Braun', category: 'Surgical', image: 'https://clonallon.com/wp-content/uploads/2021/06/8087B-scaled.jpg', alt: 'B. Braun surgical instrument set' },
-    { id: 48, name: 'Ambu Bag Infant/Neonate', brand: 'Generic', category: 'Surgical', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/ambu-bag-500x500.jpg', alt: 'Infant/neonate ambu bag resuscitator' },
-    { id: 49, name: 'Manual Resuscitator', brand: 'Generic', category: 'Surgical', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/manual-resuscitator-500x500.jpg', alt: 'Manual resuscitator (ambu bag)' },
-    { id: 50, name: 'Mama Delivery Kit', brand: 'Generic', category: 'Surgical', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/delivery-kit-500x500.jpg', alt: 'Mama delivery kit for childbirth' },
-    { id: 51, name: 'Surgical Equips', brand: 'Generic', category: 'Surgical', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/surgical-instruments-500x500.jpg', alt: 'Assorted surgical equipment' },
-    // Mobility
-    { id: 11, name: 'Hospital Bed', brand: 'Generic', category: 'Mobility', image: 'https://5.imimg.com/data5/SELLER/Default/2022/7/OG/GL/GL/1447260/hospital-bed-500x500.jpg', alt: 'Adjustable hospital bed' },
-    { id: 12, name: 'Wheelchair', brand: 'Generic', category: 'Mobility', image: 'https://www.verywellhealth.com/thmb/0Qw1Qw8Qw8Qw8Qw8Qw8Qw8Qw8Qw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/wheelchair-GettyImages-1147279562-5c7e2b8e46e0fb0001c6c1e2.jpg', alt: 'Standard manual wheelchair' },
-    { id: 13, name: 'Crutches', brand: 'Generic', category: 'Mobility', image: 'https://www.verywellhealth.com/thmb/0Qw1Qw8Qw8Qw8Qw8Qw8Qw8Qw8Qw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/crutches-GettyImages-1147279562-5c7e2b8e46e0fb0001c6c1e2.jpg', alt: 'Underarm crutches for mobility support' },
-    { id: 14, name: 'Walking Aid', brand: 'Generic', category: 'Mobility', image: 'https://www.verywellhealth.com/thmb/0Qw1Qw8Qw8Qw8Qw8Qw8Qw8Qw8Qw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/walker-GettyImages-1147279562-5c7e2b8e46e0fb0001c6c1e2.jpg', alt: 'Walking frame aid for mobility support' },
-    { id: 15, name: 'Orthopaedic Support', brand: 'Generic', category: 'Orthopaedics', image: 'https://www.verywellhealth.com/thmb/0Qw1Qw8Qw8Qw8Qw8Qw8Qw8Qw8Qw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/orthopedic-support-GettyImages-1147279562-5c7e2b8e46e0fb0001c6c1e2.jpg', alt: 'Orthopaedic support brace' },
-    { id: 16, name: 'Commode Chair', brand: 'Generic', category: 'Mobility', image: 'https://5.imimg.com/data5/SELLER/Default/2022/7/OG/GL/GL/1447260/commode-chair-500x500.jpg', alt: 'Bedside commode chair' },
-    { id: 17, name: 'Air Mattress', brand: 'Generic', category: 'Mobility', image: 'https://5.imimg.com/data5/SELLER/Default/2022/7/OG/GL/GL/1447260/air-mattress-500x500.jpg', alt: 'Alternating pressure air mattress for bedsore prevention' },
-    { id: 18, name: 'Nebulizer Machine', brand: 'Generic', category: 'Diagnostics', image: 'https://5.imimg.com/data5/SELLER/Default/2022/7/OG/GL/GL/1447260/nebulizer-machine-500x500.jpg', alt: 'Portable nebulizer machine for respiratory therapy' },
-    // Consumables
-    { id: 52, name: 'Face Mask KN95 Folding', brand: 'Generic', category: 'Consumables', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/kn95-face-mask-500x500.jpg', alt: 'KN95 folding face mask' },
-    { id: 53, name: 'Face Mask KN95', brand: 'Generic', category: 'Consumables', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/kn95-face-mask-500x500.jpg', alt: 'KN95 face mask' },
-    { id: 54, name: 'Face Shield', brand: 'Generic', category: 'Consumables', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/face-shield-500x500.jpg', alt: 'Protective face shield' },
-    { id: 55, name: 'Cotton Wool Neosafe', brand: 'Neosafe', category: 'Consumables', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/cotton-wool-500x500.jpg', alt: 'Neosafe medical cotton wool' },
-    { id: 56, name: 'Cotton WOW Bandages Neosafe', brand: 'Neosafe', category: 'Consumables', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/bandage-500x500.jpg', alt: 'Neosafe cotton WOW bandages' },
-    { id: 57, name: 'Tongue Depressor Wooden Type', brand: 'Generic', category: 'Consumables', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/tongue-depressor-500x500.jpg', alt: 'Wooden tongue depressor' },
-    { id: 58, name: 'IV Cannula Neovac', brand: 'Neovac', category: 'Consumables', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/iv-cannula-500x500.jpg', alt: 'Neovac IV cannula' },
-    { id: 59, name: 'Zinc Oxide Plaster', brand: 'Generic', category: 'Consumables', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/zinc-oxide-plaster-500x500.jpg', alt: 'Roll of zinc oxide adhesive plaster' },
-    { id: 60, name: 'Biohazard Bags Red', brand: 'Generic', category: 'Consumables', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/biohazard-bag-500x500.jpg', alt: 'Red biohazard waste bag' },
-    { id: 61, name: 'Biohazard Bags Black', brand: 'Generic', category: 'Consumables', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/biohazard-bag-500x500.jpg', alt: 'Black biohazard waste bag' },
-    { id: 62, name: 'Biohazard Bags Yellow', brand: 'Generic', category: 'Consumables', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/biohazard-bag-500x500.jpg', alt: 'Yellow biohazard waste bag' },
-    { id: 63, name: 'Aniosept Tabs Laboratoires', brand: 'Laboratoires', category: 'Consumables', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/disinfectant-tablet-500x500.jpg', alt: 'Laboratoires Aniosept disinfectant tablets' },
-    // Miscellaneous
-    { id: 64, name: 'First Aid Box', brand: 'Generic', category: 'Miscellaneous', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/first-aid-box-500x500.jpg', alt: 'First aid box' },
-    { id: 65, name: 'Examination Light', brand: 'Generic', category: 'Miscellaneous', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/examination-light-500x500.jpg', alt: 'Medical examination light' },
-    { id: 66, name: 'Florican Anklet', brand: 'Florican', category: 'Orthopaedics', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/anklet-500x500.jpg', alt: 'Florican orthopaedic anklet support' },
-    { id: 67, name: 'Sensors Probe', brand: 'Generic', category: 'Monitoring', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/sensor-probe-500x500.jpg', alt: 'Medical sensor probe' },
-    { id: 68, name: 'Infant Sensor', brand: 'Generic', category: 'Monitoring', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/sensor-probe-500x500.jpg', alt: 'Infant medical monitoring sensor' },
-    { id: 69, name: 'Rapid Diagnostic Test Medsource', brand: 'Medsource', category: 'Diagnostics', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/rapid-diagnostic-test-500x500.jpg', alt: 'Medsource rapid diagnostic test kit' },
-    { id: 70, name: 'Triple Blood Bag', brand: 'Generic', category: 'Laboratory', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/blood-bag-500x500.jpg', alt: 'Triple blood bag for blood collection and separation' },
-    { id: 71, name: 'Crocs', brand: 'Generic', category: 'Miscellaneous', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/crocs-500x500.jpg', alt: 'Medical clogs (Crocs)' },
-    { id: 72, name: 'Yellow Tips', brand: 'Generic', category: 'Laboratory', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/yellow-tips-500x500.jpg', alt: 'Yellow pipette tips for laboratory use' },
-    { id: 73, name: 'Blue Tips', brand: 'Generic', category: 'Laboratory', image: 'https://5.imimg.com/data5/SELLER/Default/2021/7/ZW/UL/GL/1287260/blue-tips-500x500.jpg', alt: 'Blue pipette tips for laboratory use' },
-];
+
+// Process the data to convert Google Drive links and add fallback images
+const processedProducts = csvData.map(product => ({
+  ...product,
+  image: product.image ? convertGoogleDriveLink(product.image) : '/medical-icon.svg',
+  description: getProductDescription(product.name, product.brand, product.category),
+  specs: getProductSpecs(product.name, product.brand, product.category)
+}));
+
+// Featured products (first 3 with images)
+const featuredProducts = processedProducts.filter(p => p.image !== '/medical-icon.svg').slice(0, 3);
+
+// All products
+const allProducts = processedProducts;
 const allProductsWithAlts = allProducts.map(p => ({...p, alt: p.alt || `${p.brand} ${p.name}`}));
 
+// Helper functions for product descriptions and specs
+function getProductDescription(name: string, brand: string, category: string): string {
+  const descriptions: { [key: string]: string } = {
+    'Littmann Classic III Stethoscope': 'The industry standard for auscultation, offering high acoustic sensitivity for exceptional performance, plus a versatile two-sided chestpiece.',
+    'High-Speed Lab Centrifuge': 'A robust and quiet centrifuge for high-throughput sample processing. Features advanced safety protocols and an intuitive interface.',
+    'Portable 12-Lead ECG Monitor': 'Compact and lightweight, this ECG machine provides comprehensive cardiac analysis on its high-resolution color touchscreen.',
+    'Digital Pulse Oximeter': 'Advanced pulse oximetry technology for accurate oxygen saturation and heart rate monitoring.',
+    'Automated Chemistry Analyzer': 'High-throughput automated chemistry analyzer for comprehensive laboratory testing.',
+    'Intensive Care Ventilator': 'Advanced ICU ventilator with multiple ventilation modes and comprehensive monitoring capabilities.',
+    'Surgical Instrument Set': 'Complete set of precision surgical instruments for various medical procedures.',
+    'Hospital Bed': 'Adjustable hospital bed with multiple positioning options for patient comfort and care.',
+    'Wheelchair': 'Standard manual wheelchair for patient mobility and transportation.',
+  };
+  
+  return descriptions[name] || `Professional ${category.toLowerCase()} equipment from ${brand}. High-quality medical device designed for healthcare professionals.`;
+}
+
+function getProductSpecs(name: string, brand: string, category: string): string[] {
+  const specs: { [key: string]: string[] } = {
+    'Littmann Classic III Stethoscope': ['Dual-sided Chestpiece', 'Tunable Diaphragm', '5-Year Warranty'],
+    'High-Speed Lab Centrifuge': ['4000 RPM Max Speed', '24-Tube Capacity', 'Quiet Operation'],
+    'Portable 12-Lead ECG Monitor': ['12-Lead Analysis', '7" Color Display', 'Wireless Data Transfer'],
+    'Digital Pulse Oximeter': ['SpO2 Monitoring', 'Heart Rate Display', 'Battery Powered'],
+    'Automated Chemistry Analyzer': ['High Throughput', 'Multiple Test Panels', 'Automated Calibration'],
+    'Intensive Care Ventilator': ['Multiple Modes', 'Advanced Monitoring', 'Touch Screen Interface'],
+    'Surgical Instrument Set': ['Sterile Packaged', 'High-Grade Steel', 'Complete Set'],
+    'Hospital Bed': ['Electric Adjustment', 'Side Rails', 'Trendelenburg Position'],
+    'Wheelchair': ['Lightweight Frame', 'Folding Design', 'Comfortable Seating'],
+  };
+  
+  return specs[name] || ['Professional Grade', 'CE Certified', 'Warranty Included'];
+}
+
 const categories = [
-    { name: 'All Products', icon: Layers }, { name: 'Diagnostics', icon: HeartPulse }, { name: 'Monitoring', icon: Activity },
-    { name: 'Laboratory', icon: TestTube }, { name: 'ICU', icon: Star }, { name: 'Surgical', icon: CheckCircle },
+    { name: 'All Products', icon: Layers }, 
+    { name: 'Diagnostics', icon: HeartPulse }, 
+    { name: 'Monitoring', icon: Activity },
+    { name: 'Laboratory', icon: TestTube }, 
+    { name: 'ICU', icon: Star }, 
+    { name: 'Surgical', icon: CheckCircle },
+    { name: 'Mobility', icon: Activity },
+    { name: 'Orthopaedics', icon: HeartPulse },
+    { name: 'Consumables', icon: Package },
+    { name: 'Miscellaneous', icon: Package },
 ];
-const brands = ['All Brands', '3M Littmann', 'Masimo', 'Thermo Fisher', 'Mindray', 'Roche', 'Omron', 'Dräger', 'B. Braun'];
+
+// Extract unique brands from the data
+const uniqueBrands = [...new Set(csvData.map(p => p.brand))].sort();
+const brands = ['All Brands', ...uniqueBrands];
 
 // --- Reusable Components (Defined OUTSIDE the main component) ---
 const PlusGrid = () => (

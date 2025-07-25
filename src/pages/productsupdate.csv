@@ -1,0 +1,73 @@
+id,name,brand,category,image,alt
+1,Littmann Classic III Stethoscope,3M Littmann,Diagnostics,,Littmann Classic III Stethoscope in black
+3,High-Speed Lab Centrifuge,Thermo Fisher,Laboratory,https://drive.google.com/file/d/1t5rVKgIcUapjONVqbItr1VbbaLVtUoaJ/view?usp=drive_link,Thermo Fisher high-speed lab centrifuge
+4,Portable 12-Lead ECG Monitor,Mindray,Monitoring,https://drive.google.com/file/d/1xPuGTutLxeTJC-vobezHxQbVBpULgSG4/view?usp=drive_link,Mindray portable 12-lead ECG monitor
+2,Digital Pulse Oximeter,Masimo,Monitoring,https://drive.google.com/file/d/18cVgE-uXhIQ7xQgX3bA2ir-jYUngKPNS/view?usp=drive_link,Masimo digital pulse oximeter
+19,Pulse Oximeter Edan H100B,Edan,Monitoring,https://drive.google.com/file/d/1jOEvcpPozL0FriLXwDf9hYmlQiuU59w8/view?usp=drive_link,Edan H100B pulse oximeter
+20,Pulse Oximeter Contec CMS60D,Contec,Monitoring,https://drive.google.com/file/d/1WEj6Fg3p9Qa8DL0LmcKQiYhhyOjlcCz8/view?usp=drive_link,Contec CMS60D pulse oximeter
+21,Handheld Pulse Oximeter,Generic,Monitoring,https://drive.google.com/file/d/1B261hKPbPPBAdDq8aBAnUbdXEKZGAcW_/view?usp=drive_link,Handheld pulse oximeter for mobile monitoring
+22,Fingertip Pulse Oximeter (Benemed BX-11),Benemed,Monitoring,,Benemed BX-11 fingertip pulse oximeter
+23,Infrared Thermometer Berrcom,Berrcom,Diagnostics,https://drive.google.com/file/d/1wzLKGi5nS68U3_-5KBCc6rkGa3NHQ9Jc/view?usp=drive_link,Berrcom non-contact infrared thermometer
+24,Infrared Thermometer Wiselion,Wiselion,Diagnostics,https://drive.google.com/file/d/1ry_1-N4Mvnt8I111OxH5umlRvyYGFz61/view?usp=drive_link,Wiselion infrared thermometer
+25,Digital BP Monitor,Omron,Diagnostics,https://drive.google.com/file/d/1eD-S-i05_23M1hMRIL9L3clif-k_KfRf/view?usp=drive_link,Omron digital blood pressure monitor
+26,BP Machine Armstyle,Generic,Diagnostics,https://drive.google.com/file/d/19uiwS6-cY2DSMFfz2UKaV8PTeGZTivj3/view?usp=drive_link,Arm-style blood pressure machine
+27,BP Machine Wrist (CK-101S),CK,Diagnostics,https://drive.google.com/file/d/1tLDoV_DxPx3w4JTon7rWURxsX9H2g0fF/view?usp=drive_link,CK-101S wrist blood pressure machine
+28,BP Machine Wrist (CK-W132),CK,Diagnostics,https://drive.google.com/file/d/1tLDoV_DxPx3w4JTon7rWURxsX9H2g0fF/view?usp=drive_link,CK-W132 wrist blood pressure machine
+29,Blood Glucose Monitor Gluconavii,Gluconavii,Diagnostics,https://drive.google.com/file/d/1K0jH3xTFE4Wexzs_BA5JNHpwCEnqgyVl/view?usp=drive_link,Gluconavii blood glucose monitor
+30,Quantum Analyzer Gold,Quantum,Diagnostics,https://drive.google.com/file/d/1GhVrA7I0wp5joJ-jpVnTsdCwMBWxM3HS/view?usp=drive_link,Gold Quantum resonance magnetic analyzer
+31,Quantum Analyzer Black,Quantum,Diagnostics,https://drive.google.com/file/d/1FD8-PO6vpSgvPTUTC3n44A_6fOzLs_F_/view?usp=drive_link,Black Quantum resonance magnetic analyzer
+32,Tens Massager,Generic,Diagnostics,https://drive.google.com/file/d/1h2UoD-mvfVtxTfPRosecmS1zZNlJDfa6/view?usp=drive_link,TENS unit muscle stimulator and massager
+33,Personal Weight Scale Digital,Generic,Diagnostics,https://drive.google.com/file/d/1zeWBAofZYZa1Uili9j3H3YM7uY2zoHp9/view?usp=drive_link,Digital personal weight scale
+34,Personal Weight Scale Manual,Generic,Diagnostics,https://drive.google.com/file/d/16X4srKEGVtVEclSmNNyVpRt3Cv_Jm2qB/view?usp=drive_link,Manual personal weight scale
+35,Seca Weight Scale Seca 700,Seca,Diagnostics,https://drive.google.com/file/d/17xIF3JXilaXhHCwUCkNUbsNNa-0A-j2V/view?usp=drive_link,Seca 700 mechanical column weight scale
+36,Seca Weight and Height Scale Seca 777,Seca,Diagnostics,https://drive.google.com/file/d/19vJGV_8OPyIdgH6caz2GBKfEj-7npvRw/view?usp=drive_link,Seca 777 digital weight and height scale
+5,Automated Chemistry Analyzer,Roche,Laboratory,https://drive.google.com/file/d/1zj5zDpRfQamA_9nx5TPNJtkryLM30593/view?usp=drive_link,Roche automated chemistry analyzer
+10,Vacutainer Needle,BD,Laboratory,https://drive.google.com/file/d/1CFRIKzvhxVKBR6QTd6QcbFhF5L_YY2an/view?usp=drive_link,BD Vacutainer needle for blood collection
+37,Test Tube Rack White,Generic,Laboratory,https://drive.google.com/file/d/1_FZUA7Pdl_FQeg5YxASwIWnNmMTkVOMb/view?usp=drive_link,White laboratory test tube rack
+38,Test Tube Rack Pale Green,Generic,Laboratory,https://drive.google.com/file/d/1K_GI90GevLu4qrmf8XAJBQXBpH-Wu_F6/view?usp=drive_link,Pale green laboratory test tube rack
+39,Falcon Tubes,Falcon,Laboratory,https://drive.google.com/file/d/1IVeKapjbSMxh-bHFLM57xc9qKbO8An18/view?usp=drive_link,Falcon conical centrifuge tubes
+40,Centrifuge Tubes,Servicebio,Laboratory,https://drive.google.com/file/d/1Gy4rZ2rTeVDbco8befDkh--Dj-Rq8jcR/view?usp=drive_link,Servicebio centrifuge tubes
+41,Falcon Tube Large,Falcon,Laboratory,https://drive.google.com/file/d/1IVeKapjbSMxh-bHFLM57xc9qKbO8An18/view?usp=drive_link,Large Falcon conical centrifuge tube
+42,Sterile Swab Stick,Rabex,Laboratory,https://drive.google.com/file/d/1ntRfkAB4-LJReJj1LgjesaegaG2wJfim/view?usp=drive_link,Rabex sterile swab stick
+43,Stool Container,Generic,Laboratory,https://drive.google.com/file/d/1ZNURaInrcYHhXdO3ZxtFioP3zIojMVa-/view?usp=drive_link,Sterile stool sample container
+44,Timer TA732,Generic,Laboratory,https://drive.google.com/file/d/1rXDv2baA7W_shOBhz2FuDKIAvclqG8U3/view?usp=drive_link,TA732 laboratory timer
+7,Intensive Care Ventilator,Dräger,ICU,https://drive.google.com/file/d/1Bmsf0S-kB83MhLKrxIzIU7g304cxnbDR/view?usp=drive_link,Dräger intensive care ventilator
+9,Emergency Ventilator,Oxivent,ICU,https://drive.google.com/file/d/1M5zJX1S8DgKOMFGTWeIYsZk-FEyQ2lJU/view?usp=drive_link,Emergency transport ventilator
+45,Infusion Pump Mindray (Benefusion Uvp),Mindray,ICU,https://drive.google.com/file/d/1WTW0FN02TSVbpjZ7iynOCedx6jAFyRMQ/view?usp=drive_link,Mindray Benefusion UVP infusion pump
+46,Infusion Pump Mindray (Benefusion VP3),Mindray,ICU,https://drive.google.com/file/d/1aCoH0sp6jM26SOlk4b2BJyN33snCt5Hr/view?usp=drive_link,Mindray Benefusion VP3 infusion pump
+47,Infrared Vein Finder XG-900,Generic,ICU,https://drive.google.com/file/d/1CspERAHkFbgp7aqcyWVB5LooecEV5h-t/view?usp=drive_link,XG-900 infrared vein finder
+8,Surgical Instrument Set,B. Braun,Surgical,https://drive.google.com/file/d/1GWGdZTcF7PSLK4ZwDCctZM2GzSMoAaFI/view?usp=drive_link,B. Braun surgical instrument set
+48,Ambu Bag Infant/Neonate,Generic,Surgical,https://drive.google.com/file/d/1ocsI0WtTdZUJ2rpxX-i0Mfyr-tG30EkJ/view?usp=drive_link,Infant/neonate ambu bag resuscitator
+49,Manual Resuscitator,Generic,Surgical,https://drive.google.com/file/d/1qKmmfQdcjNyvAifcGrYoiO6FNF_YfRUq/view?usp=drive_link,Manual resuscitator (ambu bag)
+50,Mama Delivery Kit,Generic,Surgical,,Mama delivery kit for childbirth
+51,Surgical Equips,Generic,Surgical,https://drive.google.com/file/d/1GWGdZTcF7PSLK4ZwDCctZM2GzSMoAaFI/view?usp=drive_link,Assorted surgical equipment
+11,Hospital Bed,Generic,Mobility,https://drive.google.com/file/d/1T5PMNWOJ4Sdvv24Gp6NbKFdpVe4JGaWM/view?usp=drive_link,Adjustable hospital bed
+12,Wheelchair,Generic,Mobility,https://drive.google.com/file/d/14oFeT-46Jgy_LEWFaYhV3d3zDaj1ORB_/view?usp=drive_link,Standard manual wheelchair
+13,Crutches,Generic,Mobility,https://drive.google.com/file/d/19aBIC5w8pT53Iey6HnzporpfIzhIQFkm/view?usp=drive_link,Underarm crutches for mobility support
+14,Walking Aid,Generic,Mobility,https://drive.google.com/file/d/1lW87jXOiF1wmKobKkue_hJCQgjeAUR_8/view?usp=drive_link,Walking frame aid for mobility support
+15,Orthopaedic Support,Generic,Orthopaedics,https://drive.google.com/file/d/18VN9Fw8k2zbQP-7WnbDQ58GS1asgvMr0/view?usp=drive_link,Orthopaedic support brace
+16,Commode Chair,Generic,Mobility,https://drive.google.com/file/d/1SDoRcJ5Wg0OTrwe0rdrV_W2svordKjM8/view?usp=drive_link,Bedside commode chair
+17,Air Mattress,Generic,Mobility,https://drive.google.com/file/d/1tFcVAgA_SXvLnbPqe8ApbWzgMBtIKD7O/view?usp=drive_link,Alternating pressure air mattress for bedsore prevention
+18,Nebulizer Machine,Generic,Diagnostics,https://drive.google.com/file/d/1atnwkDk87Yix8H7tAxwvR0-Y_mE5_SPG/view?usp=drive_link,Portable nebulizer machine for respiratory therapy
+52,Face Mask KN95 Folding,Generic,Consumables,https://drive.google.com/file/d/1xp8IaHMl6lCgS8EQdCrtu9qd0c2rG-hF/view?usp=drive_link,KN95 folding face mask
+53,Face Mask KN95,Generic,Consumables,https://drive.google.com/file/d/18eXNtPM4x5zNs44ubkNpzTokvahm17H8/view?usp=drive_link,KN95 face mask
+54,Face Shield,Generic,Consumables,https://drive.google.com/file/d/1-SUFc-LBoz4dP2WfRyVwz3VDW881gpSa/view?usp=drive_link,Protective face shield
+55,Cotton Wool Neosafe,Neosafe,Consumables,https://drive.google.com/file/d/1VkwhxNj6YYlfHuf3bjxJrasfXlow7wZY/view?usp=drive_link,Neosafe medical cotton wool
+56,Cotton WOW Bandages Neosafe,Neosafe,Consumables,https://drive.google.com/file/d/1L4kd5ig2X2r1KzV4cEjHr8HYhtRtic20/view?usp=drive_link,Neosafe cotton WOW bandages
+57,Tongue Depressor Wooden Type,Generic,Consumables,https://drive.google.com/file/d/1huhXnZkMISNdWLsMI_gqtCt47YP960tT/view?usp=drive_link,Wooden tongue depressor
+58,IV Cannula Neovac,Neovac,Consumables,https://drive.google.com/file/d/1sRnKOYjdqexCZFJBVcAcX1RQrY7L-usM/view?usp=drive_link,Neovac IV cannula
+59,Zinc Oxide Plaster,Generic,Consumables,https://drive.google.com/file/d/1e2kx8PQdhr4b7stavWBSEPHFziyhS-Gt/view?usp=drive_link,Roll of zinc oxide adhesive plaster
+60,Biohazard Bags Red,Generic,Consumables,https://drive.google.com/file/d/1G0pgGaw8YlrczEYI_Dcr3pC0qDfpF9g3/view?usp=drive_link,Red biohazard waste bag
+61,Biohazard Bags Black,Generic,Consumables,https://drive.google.com/file/d/1vV8jTzez8zWtFhsDbogkYOvapUMnYpKJ/view?usp=drive_link,Black biohazard waste bag
+62,Biohazard Bags Yellow,Generic,Consumables,https://drive.google.com/file/d/1S3vx6F9qguYkt9ogc7rLybABjyD7EoyK/view?usp=drive_link,Yellow biohazard waste bag
+63,Aniosept Tabs Laboratoires,Laboratoires,Consumables,https://drive.google.com/file/d/17YJtWFsqgSpxSFdjYKSErEG2AwGKk5Vv/view?usp=drive_link,Laboratoires Aniosept disinfectant tablets
+64,First Aid Box,Generic,Miscellaneous,https://drive.google.com/file/d/1jw6ybAwgeydvnY6ZyPaxUAuyuWCzOtFu/view?usp=drive_link,First aid box
+65,Examination Light,Generic,Miscellaneous,https://drive.google.com/file/d/1aS78z4xjphwZ43Ml5LSOOuScPYCyRjYT/view?usp=drive_link,Medical examination light
+66,Florican Anklet,Florican,Orthopaedics,https://drive.google.com/file/d/1xZKMC0APGgHYcbB9OuY4Q2TCM0oTZdxc/view?usp=drive_link,Florican orthopaedic anklet support
+67,Sensors Probe,Generic,Monitoring,https://drive.google.com/file/d/16LbiVAq9BfjtHrhjiyLLm_t0NhCB5Vst/view?usp=drive_link,Medical sensor probe
+68,Infant Sensor,Generic,Monitoring,https://drive.google.com/file/d/1cY5J2GqhmlWbVFJdkb6wnQqGODZ4awsl/view?usp=drive_link,Infant medical monitoring sensor
+69,Rapid Diagnostic Test Medsource,Medsource,Diagnostics,,Medsource rapid diagnostic test kit
+70,Triple Blood Bag,Generic,Laboratory,https://drive.google.com/file/d/1R5uIaXC83FN6EFb4AdcuVkSS0D9n225A/view?usp=drive_link,Triple blood bag for blood collection and separation
+71,Crocs,Generic,Miscellaneous,https://drive.google.com/file/d/1KzuUtIkTNfwMLt2Gc6CfNSujFNbzXtMo/view?usp=drive_link,Medical clogs (Crocs)
+72,Yellow Tips,Generic,Laboratory,https://drive.google.com/file/d/1IdPaX_USyYLsb5EZMDoBgaihTYX0mXBK/view?usp=drive_link,Yellow pipette tips for laboratory use
+73,Blue Tips,Generic,Laboratory,,Blue pipette tips for laboratory use 
