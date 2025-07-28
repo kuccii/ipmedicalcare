@@ -50,8 +50,8 @@ const CaseStudiesPage: React.FC = () => {
       ],
       testimonial: {
         quote: 'IP Medical Care delivered beyond our expectations. Their rapid response and quality equipment helped us save more lives during a critical period.',
-        author: 'Ipyana Steven Ulisaja',
-        role: 'Managing Director'
+        author: 'Dr. Hassan Idd',
+        role: 'ICU Director'
       },
     },
     {
@@ -72,8 +72,8 @@ const CaseStudiesPage: React.FC = () => {
       ],
       testimonial: {
         quote: 'The new equipment has transformed our lab operations. Test turnaround times have improved dramatically, which directly benefits our patient care standards.',
-        author: 'Loveness Mushi',
-        role: 'General Manager'
+        author: 'Dr. Mohamed Zaiid',
+        role: 'Laboratory Director'
       },
     },
   ];
@@ -167,7 +167,7 @@ const CaseStudiesPage: React.FC = () => {
               <div className="relative z-10">
                 <p className="text-slate-700 mb-6 italic text-lg leading-relaxed">"{study.testimonial.quote}"</p>
                 <div className="flex items-center gap-4">
-                  <img src="https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop&dpr=2" alt={`Headshot of ${study.testimonial.author}`} className="w-14 h-14 rounded-full object-cover shadow-md" />
+                  <img src={index === 0 ? "https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop&dpr=2" : "https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop&dpr=2"} alt={`Headshot of ${study.testimonial.author}`} className="w-14 h-14 rounded-full object-cover shadow-md" />
                   <div>
                     <p className="font-bold text-slate-900">{study.testimonial.author}</p>
                     <p className="text-sm text-slate-600">{study.testimonial.role}</p>
