@@ -58,11 +58,11 @@ const flagshipProducts = [
     { id: 3, name: 'Life-Support & ICU Systems', category: 'Monitoring', image: 'https://advinhealthcare.com/wp-content/uploads/2022/10/Intensive-Care-Unit-ICU-1.jpg', description: 'Compact and intuitive ECG machines and ventilators, providing critical data for patient care in high-stakes environments.', alt: 'An intensive care unit with life-support systems and patient monitoring equipment.' },
 ];
 
-const partnershipProof = [
-    { pillar: 'Certified Quality', icon: Shield, testimonial: 'Their equipment meets the highest international standards. We trust IP Medical Care for all our critical care needs.', author: 'Ipyana Steven Ulisaja, Muhimbili Hospital' },
-    { pillar: 'Reliable Logistics', icon: Truck, testimonial: 'Fast, dependable delivery across Tanzania is crucial for us. IP Medical Care has never let us down.', author: 'Loveness Mushi, KCMC' },
-    { pillar: 'Expert Support', icon: Award, testimonial: 'The post-installation training and 24/7 support are invaluable. They are more than suppliers; they are partners.', author: 'Athuman Mbuga, St. Gemma Hospital' },
-];
+  const partnershipProof = [
+    { pillar: 'Certified Quality', icon: Shield, testimonial: 'Their equipment meets the highest international standards. We trust IP Medical Care for all our critical care needs.', author: 'ICU Director, Muhimbili Hospital' },
+    { pillar: 'Reliable Logistics', icon: Truck, testimonial: 'Fast, dependable delivery across Tanzania is crucial for us. IP Medical Care has never let us down.', author: 'Procurement Manager, KCMC' },
+    { pillar: 'Expert Support', icon: Award, testimonial: 'The post-installation training and 24/7 support are invaluable. They are more than suppliers; they are partners.', author: 'Technical Director, St. Gemma Hospital' },
+  ];
 
 const stats = [
     { number: 200, suffix: '+', label: 'Healthcare Partners in TZ', icon: Users },

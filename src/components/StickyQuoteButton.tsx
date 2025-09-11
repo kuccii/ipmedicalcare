@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MessageCircle, X, Send } from 'lucide-react';
 
 const getApiBase = () => {
@@ -17,6 +17,33 @@ const StickyQuoteButton: React.FC = () => {
   });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const turnstileWidgetRef = useRef<string | null>(null);
+
+  const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY;
+
+  useEffect(() => {
+    if (!TURNSTILE_SITE_KEY) return;
+    const w = window as any;
+    if (w.turnstile && document.getElementById('cf-turnstile-sticky')) {
+      turnstileWidgetRef.current = w.turnstile.render('#cf-turnstile-sticky', {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: 'auto',
+        callback: (token: string) => setTurnstileToken(token),
+      });
+    } else {
+      const onLoad = () => {
+        if (document.getElementById('cf-turnstile-sticky')) {
+          turnstileWidgetRef.current = w.turnstile.render('#cf-turnstile-sticky', {
+            sitekey: TURNSTILE_SITE_KEY,
+            theme: 'auto',
+            callback: (token: string) => setTurnstileToken(token),
+          });
+        }
+      };
+      (w as any).onloadTurnstileCallback = onLoad;
+    }
+  }, [TURNSTILE_SITE_KEY]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,7 +53,14 @@ const StickyQuoteButton: React.FC = () => {
       const response = await fetch(`${getApiBase()}/api/send-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          // API expects these optional fields; send minimal set
+          phone: '',
+          category: 'Quick Quote',
+          urgency: 'normal',
+          turnstileToken,
+        }),
       });
       if (response.ok) {
         setStatus('success');
@@ -154,6 +188,11 @@ const StickyQuoteButton: React.FC = () => {
                     placeholder="Describe the medical equipment you need, quantities, and any specific requirements..."
                   />
                 </div>
+                {TURNSTILE_SITE_KEY && (
+                  <div className="pt-1">
+                    <div id="cf-turnstile-sticky" className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY}></div>
+                  </div>
+                )}
 
                 <button
                   type="submit"

@@ -50,8 +50,8 @@ const CaseStudiesPage: React.FC = () => {
       ],
       testimonial: {
         quote: 'IP Medical Care delivered beyond our expectations. Their rapid response and quality equipment helped us save more lives during a critical period.',
-        author: 'Dr. Hassan Idd',
-        role: 'ICU Director'
+        author: 'ICU Director',
+        role: 'Muhimbili National Hospital'
       },
     },
     {
@@ -72,8 +72,8 @@ const CaseStudiesPage: React.FC = () => {
       ],
       testimonial: {
         quote: 'The new equipment has transformed our lab operations. Test turnaround times have improved dramatically, which directly benefits our patient care standards.',
-        author: 'Dr. Mohamed Zaiid',
-        role: 'Laboratory Director'
+        author: 'Laboratory Director',
+        role: 'Kilimanjaro Christian Medical Centre'
       },
     },
   ];
